@@ -1,0 +1,24 @@
+# This is a template for the development profile configuration.
+# Replace placeholders with actual values before using.
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hrims_db
+    username: your_db_username
+    password: your_db_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  profiles:
+    active: dev
+  # Add mail or other local service stubs here
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: your_smtp_username
+    password: your_smtp_password

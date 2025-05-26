@@ -1,35 +1,33 @@
-version: "3.8" # Docker Compose file format version
+version: "3.8"
 
 services:
-  # Defines the containers (services) to run
-
   db:
-    # The PostgreSQL database container
     image: postgres:16.3-alpine
     container_name: hrims-db
-    restart: always # Restart if container crashes
+    restart: always
     environment:
-      # Env vars inside the container
       POSTGRES_DB: hrims_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1337x.to
+      POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432" # Expose port 5432 to host machine
+      - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data # Persist data in Docker volume
+      - pgdata:/var/lib/postgresql/data
 
   backend:
-    # Your Spring Boot backend container
-    build: . # Build Docker image using Dockerfile in current folder
+    build: .
     container_name: hrims-backend
     depends_on:
-      - db # Wait for db to be ready before starting backend
+      - db
     ports:
-      - "8080:8080" # Map port 8080 of container to host
+      - "8080:8080"
     environment:
+      SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/hrims_db
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 1337x.to
+      SPRING_DATASOURCE_PASSWORD: postgres
+      # comment below if  not using .env file instead
+      env_file: .env
 
 volumes:
-  pgdata: # Named volume to store Postgres data persistently
+  pgdata:
