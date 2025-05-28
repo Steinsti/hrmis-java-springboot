@@ -34,7 +34,7 @@ public class EmployeeController {
     @GetMapping("/add")
     public String showAddEmployeeForm(Model model) {
         model.addAttribute("employee", new Employee());
-        return "employee/form";
+        return "employees/form";
     }
 
     @PostMapping("/save")
@@ -44,7 +44,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteEmploye(@PathVariable UUID id) {
+    public String deleteEmployee(@PathVariable UUID id) {
         return "redirect:/employees";
     }    
 }
