@@ -48,3 +48,6 @@ build/
 log/
 !mvnw
 !mvnw.cmd
+
+# node modules
+node_modules

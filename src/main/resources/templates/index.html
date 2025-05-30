@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>STEIN HRIMS Pro - Your Complete HR Solution</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light blue-gray background */
+            color: #334155; /* Darker text */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+    </head>
+    <body class="antialiased">
+
+        <header
+            class="bg-white shadow-sm py-4 px-6 md:px-10 sticky top-0 z-50 rounded-b-lg">
+            <nav class="container mx-auto flex justify-between items-center">
+                <a href="#" th:href="@{/}"
+                    class="flex items-center space-x-2 text-2xl font-bold text-indigo-600">
+                    <i class="fas fa-users-cog text-3xl"></i> <span>STEIN HRIMS
+                        Pro</span>
+                </a>
+
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" th:href="@{/}"
+                        class="text-gray-700 hover:text-indigo-600 font-medium transition duration-300 ease-in-out rounded-md p-2">Home</a>
+                    <a href="#" th:href="@{/dashboard}"
+                        class="text-gray-700 hover:text-indigo-600 font-medium transition duration-300 ease-in-out rounded-md p-2">Dashboard</a>
+                    <a href="#" th:href="@{/employees}"
+                        class="text-gray-700 hover:text-indigo-600 font-medium transition duration-300 ease-in-out rounded-md p-2">Employees</a>
+                    <a href="#" th:href="@{/payroll}"
+                        class="text-gray-700 hover:text-indigo-600 font-medium transition duration-300 ease-in-out rounded-md p-2">Payroll</a>
+                    <a href="#" th:href="@{/contact}"
+                        class="text-gray-700 hover:text-indigo-600 font-medium transition duration-300 ease-in-out rounded-md p-2">Contact</a>
+                </div>
+
+                <div class="hidden md:flex space-x-4">
+                    <div th:if="${!isAuthenticated}">
+                        <a href="#" th:href="@{/login}"
+                            class="px-5 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition duration-300 ease-in-out font-medium shadow-sm">Login</a>
+                        <a href="#" th:href="@{/register}"
+                            class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out font-medium shadow-md">Sign
+                            Up</a>
+                    </div>
+                    <div th:if="${isAuthenticated}">
+                        <a href="#" th:href="@{/profile}"
+                            class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out font-medium shadow-md">My
+                            Profile</a>
+                        <a href="#" th:href="@{/logout}"
+                            class="px-5 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-50 transition duration-300 ease-in-out font-medium shadow-sm">Logout</a>
+                    </div>
+                </div>
+
+                <button
+                    class="md:hidden text-gray-700 hover:text-indigo-600 focus:outline-none"
+                    onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </nav>
+
+            <div id="mobile-menu"
+                class="hidden md:hidden bg-white mt-4 rounded-lg shadow-lg">
+                <div class="flex flex-col p-4 space-y-2">
+                    <a href="#" th:href="@{/}"
+                        class="block text-gray-700 hover:text-indigo-600 font-medium py-2 px-3 rounded-md">Home</a>
+                    <a href="#" th:href="@{/dashboard}"
+                        class="block text-gray-700 hover:text-indigo-600 font-medium py-2 px-3 rounded-md">Dashboard</a>
+                    <a href="#" th:href="@{/employees}"
+                        class="block text-gray-700 hover:text-indigo-600 font-medium py-2 px-3 rounded-md">Employees</a>
+                    <a href="#" th:href="@{/payroll}"
+                        class="block text-gray-700 hover:text-indigo-600 font-medium py-2 px-3 rounded-md">Payroll</a>
+                    <a href="#" th:href="@{/contact}"
+                        class="block text-gray-700 hover:text-indigo-600 font-medium py-2 px-3 rounded-md">Contact</a>
+                    <hr class="border-gray-200 my-2">
+                    <div th:if="${!isAuthenticated}"
+                        class="flex flex-col space-y-2">
+                        <a href="#" th:href="@{/login}"
+                            class="block px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 font-medium text-center">Login</a>
+                        <a href="#" th:href="@{/register}"
+                            class="block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium text-center">Sign
+                            Up</a>
+                    </div>
+                    <div th:if="${isAuthenticated}"
+                        class="flex flex-col space-y-2">
+                        <a href="#" th:href="@{/profile}"
+                            class="block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium text-center">My
+                            Profile</a>
+                        <a href="#" th:href="@{/logout}"
+                            class="block px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-50 font-medium text-center">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section
+            class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-20 md:py-32 text-center rounded-b-lg shadow-lg">
+            <div class="container mx-auto px-6">
+                <h1
+                    class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                    Streamline Your HR Operations
+                </h1>
+                <p
+                    class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                    HRIMS Pro is the all-in-one Human Resources Information
+                    Management System designed to simplify employee management,
+                    payroll, time tracking, and more.
+                </p>
+                <div
+                    class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#" th:href="@{/register}"
+                        class="px-8 py-4 bg-white text-indigo-600 font-semibold rounded-lg shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-300 ease-in-out">
+                        Get Started Free
+                    </a>
+                    <a href="#" th:href="@{/features}"
+                        class="px-8 py-4 border-2 border-white text-white font-semibold rounded-lg shadow-lg hover:bg-white hover:text-indigo-600 transform hover:scale-105 transition duration-300 ease-in-out">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="py-16 md:py-24 bg-white rounded-lg shadow-lg mx-6 md:mx-10 -mt-12 relative z-10">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    Powerful Features for Modern HR
+                </h2>
+                <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
+                    Discover how HRIMS Pro can transform your human resources
+                    department.
+                </p>
+
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div
+                        class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-2">
+                        <div class="text-indigo-600 text-5xl mb-6">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3
+                            class="text-xl font-semibold text-gray-800 mb-3">Employee
+                            Management</h3>
+                        <p class="text-gray-600">
+                            Centralize employee data, track performance, and
+                            manage profiles with ease.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-2">
+                        <div class="text-green-600 text-5xl mb-6">
+                            <i class="fas fa-money-check-alt"></i>
+                        </div>
+                        <h3
+                            class="text-xl font-semibold text-gray-800 mb-3">Payroll
+                            Processing</h3>
+                        <p class="text-gray-600">
+                            Automate payroll calculations, deductions, and tax
+                            compliance effortlessly.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-2">
+                        <div class="text-yellow-600 text-5xl mb-6">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3
+                            class="text-xl font-semibold text-gray-800 mb-3">Time
+                            &amp; Attendance</h3>
+                        <p class="text-gray-600">
+                            Track employee work hours, manage shifts, and
+                            approve time-off requests.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-2">
+                        <div class="text-red-600 text-5xl mb-6">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3
+                            class="text-xl font-semibold text-gray-800 mb-3">Performance
+                            Management</h3>
+                        <p class="text-gray-600">
+                            Set goals, conduct appraisals, and foster continuous
+                            employee development.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-2">
+                        <div class="text-blue-600 text-5xl mb-6">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h3
+                            class="text-xl font-semibold text-gray-800 mb-3">Recruitment
+                            &amp; Onboarding</h3>
+                        <p class="text-gray-600">
+                            Simplify hiring, track applicants, and seamlessly
+                            onboard new employees.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-2">
+                        <div class="text-purple-600 text-5xl mb-6">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3
+                            class="text-xl font-semibold text-gray-800 mb-3">Reporting
+                            &amp; Analytics</h3>
+                        <p class="text-gray-600">
+                            Gain insights with customizable reports and
+                            data-driven HR analytics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="bg-indigo-700 text-white py-16 md:py-20 text-center rounded-lg shadow-lg mx-6 md:mx-10 my-12">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to
+                    Transform Your HR?</h2>
+                <p class="text-lg mb-8 max-w-2xl mx-auto opacity-90">
+                    Join thousands of businesses that trust STEIN HRIMS Pro to
+                    manage their most valuable asset – their people.
+                </p>
+                <a href="#" th:href="@{/register}"
+                    class="px-8 py-4 bg-white text-indigo-700 font-semibold rounded-lg shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-300 ease-in-out">
+                    Start Your Free Trial Today
+                </a>
+            </div>
+        </section>
+
+        <footer class="bg-gray-800 text-gray-300 py-10 rounded-t-lg">
+            <div
+                class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">STEIN
+                        HRIMS Pro</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Simplifying HR for a more productive workforce.
+                    </p>
+                    <div
+                        class="flex justify-center md:justify-start space-x-4 mt-4">
+                        <a href="#"
+                            class="text-gray-400 hover:text-white transition duration-300"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#"
+                            class="text-gray-400 hover:text-white transition duration-300"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="#"
+                            class="text-gray-400 hover:text-white transition duration-300"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="#"
+                            class="text-gray-400 hover:text-white transition duration-300"><i
+                                class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Quick
+                        Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" th:href="@{/features}"
+                                class="hover:text-white transition duration-300">Features</a></li>
+                        <li><a href="#" th:href="@{/pricing}"
+                                class="hover:text-white transition duration-300">Pricing</a></li>
+                        <li><a href="#" th:href="@{/about}"
+                                class="hover:text-white transition duration-300">About
+                                Us</a></li>
+                        <li><a href="#" th:href="@{/support}"
+                                class="hover:text-white transition duration-300">Support</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Contact
+                        Us</h3>
+                    <p class="text-gray-400">123 HR Street, Business City,
+                        90210</p>
+                    <p class="text-gray-400">Email: info@hrimspro.com</p>
+                    <p class="text-gray-400">Phone: +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div
+                class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500">
+                &copy; <span
+                    th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2023</span>
+                STEIN HRIMS Pro. All rights reserved.
+            </div>
+        </footer>
+
+        <script>
+        // JavaScript to toggle the mobile menu visibility
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+    </body>
+</html>
