@@ -1,0 +1,27 @@
+{
+  "name": "hrims",
+  "version": "1.0.0",
+  "description": "This is the **backend** of the full-stack Human Resource Management System built with **Java Spring Boot**. It provides RESTful APIs for managing employees, departments, leave requests, and authentication.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:tailwindcss": "npx @tailwindcss/cli  -i src/main/resources/static/css/styles.tailwind.css -o src/main/resources/static/css/styles.build.tailwind.css --minify",
+    "watch:tailwindcss": "npx @tailwindcss/cli  -i src/main/resources/static/css/styles.tailwind.css -o src/main/resources/static/css/styles.build.tailwind.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Steinsti/hrmis-java-springboot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Steinsti/hrmis-java-springboot/issues"
+  },
+  "homepage": "https://github.com/Steinsti/hrmis-java-springboot#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "tailwindcss": "^4.1.8"
+  }
+}
