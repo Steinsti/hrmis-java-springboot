@@ -2,20 +2,18 @@ package io.github.steinsti.hrims.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.UUID;
-
-
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue
-    @Column(columnDefinition = "uuid", updatable = false, nullable = false)
-    private UUID id;
+    private int id;
 
     @Column(nullable = false, unique = true)
     private String  username;
@@ -29,9 +27,5 @@ public class User {
     @OneToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
-
-    public static Object builder() {
-        throw new UnsupportedOperationException("Unimplemented method 'builder'");
-    }    
 }
 

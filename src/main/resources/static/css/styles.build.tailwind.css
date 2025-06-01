@@ -665,8 +665,10 @@
     }
   }
   .hover\:bg-blue-700 {
-    .hover\:bg-blue-700:hover {
-      background-color: var(--color-blue-700);
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-blue-700);
+      }
     }
   }
   .hover\:bg-gray-100 {

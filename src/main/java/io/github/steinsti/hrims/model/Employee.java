@@ -1,9 +1,7 @@
 package io.github.steinsti.hrims.model;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -21,8 +19,7 @@ public class Employee {
 
     @Id
     @GeneratedValue
-    @Column(columnDefinition = "uuid", updatable = false, nullable = false)
-    private UUID id;
+    private int id;
 
     private String firstName;
     private String lastName;
