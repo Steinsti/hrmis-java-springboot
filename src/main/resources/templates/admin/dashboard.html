@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HRIMS - Home</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+        /* Custom styles if needed */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font as per guidelines */
+        }
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar-closed {
+            transform: translateX(-100%);
+        }
+        .sidebar-open {
+            transform: translateX(0);
+        }
+        .content {
+            transition: margin-left 0.3s ease-in-out;
+        }
+    </style>
+    </head>
+    <body class="bg-gray-100 text-gray-800">
+
+        <div class="flex h-screen overflow-hidden">
+
+            <aside id="sidebar"
+                class="sidebar fixed inset-y-0 left-0 z-30 w-64 bg-slate-800 text-white p-6 space-y-6 transform md:relative md:translate-x-0 sidebar-closed md:sidebar-open">
+                <div class="flex items-center justify-between">
+                    <a th:href="@{/}"
+                        class="text-2xl font-semibold text-white hover:text-slate-300 transition duration-150">
+                        <i class="fas fa-users-cog mr-2"></i>HRIMS Pro
+                    </a>
+                    <button id="closeSidebarButton"
+                        class="md:hidden text-slate-300 hover:text-white">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <nav class="space-y-2">
+                    <a th:href="@{/}"
+                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-200 bg-slate-700 rounded-lg hover:bg-slate-600 transition duration-150">
+                        <i class="fas fa-home w-5 h-5 mr-3"></i> Dashboard
+                    </a>
+                    <a th:href="@{/employees}"
+                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+                        <i class="fas fa-users w-5 h-5 mr-3"></i> Employees
+                    </a>
+                    <a th:href="@{/departments}"
+                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+                        <i class="fas fa-building w-5 h-5 mr-3"></i> Departments
+                    </a>
+                    <a th:href="@{/positions}"
+                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+                        <i class="fas fa-user-tie w-5 h-5 mr-3"></i> Positions
+                    </a>
+                    <a th:href="@{/payroll}"
+                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+                        <i class="fas fa-file-invoice-dollar w-5 h-5 mr-3"></i>
+                        Payroll
+                    </a>
+                    <a th:href="@{/leave}"
+                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+                        <i class="fas fa-calendar-alt w-5 h-5 mr-3"></i> Leave
+                        Management
+                    </a>
+                    <a th:href="@{/recruitment}"
+                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+                        <i class="fas fa-user-plus w-5 h-5 mr-3"></i>
+                        Recruitment
+                    </a>
+                    <a th:href="@{/reports}"
+                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+                        <i class="fas fa-chart-bar w-5 h-5 mr-3"></i> Reports
+                    </a>
+                    <a th:href="@{/settings}"
+                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+                        <i class="fas fa-cog w-5 h-5 mr-3"></i> Settings
+                    </a>
+                </nav>
+
+                <div
+                    class="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-700">
+                    <div class="flex items-center space-x-3">
+                        <img class="h-10 w-10 rounded-full object-cover"
+                            src="https://placehold.co/100x100/E2E8F0/4A5568?text=User"
+                            alt="User avatar"
+                            onerror="this.src='https://placehold.co/100x100/E2E8F0/4A5568?text=U'">
+                        <div>
+                            <p class="text-sm font-medium text-slate-200"
+                                th:text="${userName} ?: 'Admin User'">Admin
+                                User</p>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit"
+                                    class="text-xs text-slate-400 hover:text-slate-200 transition duration-150">
+                                    Logout
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <div id="content" class="flex-1 flex flex-col overflow-y-auto">
+                <header class="bg-white shadow-sm sticky top-0 z-20">
+                    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center justify-between h-16">
+                            <button id="openSidebarButton"
+                                class="md:hidden text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                                <span class="sr-only">Open sidebar</span>
+                                <i class="fas fa-bars text-xl"></i>
+                            </button>
+
+                            <div
+                                class="hidden md:flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
+                                <div class="max-w-lg w-full lg:max-w-xs">
+                                    <label for="search"
+                                        class="sr-only">Search</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i
+                                                class="fas fa-search text-gray-400"></i>
+                                        </div>
+                                        <input id="search" name="search"
+                                            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            placeholder="Search..."
+                                            type="search">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center ml-auto md:ml-4">
+                                <button
+                                    class="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <span class="sr-only">View
+                                        notifications</span>
+                                    <i class="far fa-bell text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <main class="flex-1 p-6 md:p-8 lg:p-10">
+                    <div class="container mx-auto">
+                        <h1 class="text-3xl font-bold text-gray-800 mb-6"
+                            th:text="'Welcome to HRIMS, ' + (${userName} ?: 'Admin') + '!'">Welcome
+                            to HRIMS!</h1>
+
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <div
+                                class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <div class="flex items-center">
+                                    <div
+                                        class="p-3 rounded-full bg-blue-500 text-white mr-4">
+                                        <i class="fas fa-users text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Total
+                                            Employees</p>
+                                        <p
+                                            class="text-2xl font-semibold text-gray-800"
+                                            th:text="${totalEmployees} ?: '1,250'">1,250</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <div class="flex items-center">
+                                    <div
+                                        class="p-3 rounded-full bg-green-500 text-white mr-4">
+                                        <i class="fas fa-building text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-sm text-gray-500">Departments</p>
+                                        <p
+                                            class="text-2xl font-semibold text-gray-800"
+                                            th:text="${departmentCount} ?: '15'">15</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <div class="flex items-center">
+                                    <div
+                                        class="p-3 rounded-full bg-yellow-500 text-white mr-4">
+                                        <i
+                                            class="fas fa-hourglass-half text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Pending
+                                            Approvals</p>
+                                        <p
+                                            class="text-2xl font-semibold text-gray-800"
+                                            th:text="${pendingApprovals} ?: '8'">8</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <div class="flex items-center">
+                                    <div
+                                        class="p-3 rounded-full bg-red-500 text-white mr-4">
+                                        <i
+                                            class="fas fa-calendar-check text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-sm text-gray-500">Upcoming
+                                            Holidays</p>
+                                        <p
+                                            class="text-2xl font-semibold text-gray-800"
+                                            th:text="${upcomingHolidays} ?: '3'">3</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 bg-white p-6 rounded-xl shadow-lg">
+                            <h2
+                                class="text-xl font-semibold text-gray-700 mb-4">Quick
+                                Actions</h2>
+                            <div class="flex flex-wrap gap-4">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
+                                    <i class="fas fa-user-plus mr-2"></i> Add
+                                    New Employee
+                                </button>
+                                <button
+                                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
+                                    <i class="fas fa-calendar-plus mr-2"></i>
+                                    Request Leave
+                                </button>
+                                <button
+                                    class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
+                                    <i class="fas fa-file-alt mr-2"></i> View
+                                    Payslip
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </main>
+
+                <footer class="bg-white border-t border-gray-200 mt-auto">
+                    <div
+                        class="container mx-auto px-6 py-4 text-center text-gray-500 text-sm">
+                        &copy; <span
+                            th:text="${#dates.year(#dates.createNow())}">2025</span>
+                        HRIMS Pro. All rights reserved.
+                        Developed in Nairobi, Kenya.
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <script th:inline="javascript">
+        // JavaScript for sidebar toggle on mobile
+        const sidebar = document.getElementById('sidebar');
+        const openSidebarButton = document.getElementById('openSidebarButton');
+        const closeSidebarButton = document.getElementById('closeSidebarButton');
+        const content = document.getElementById('content'); // Main content area
+
+        function openNav() {
+            sidebar.classList.remove('sidebar-closed');
+            sidebar.classList.add('sidebar-open');
+            // On mobile, the sidebar will overlay. On larger screens, it pushes content.
+            if (window.innerWidth < 768) { // md breakpoint
+                // Add overlay or similar effect if desired
+            } else {
+                // content.style.marginLeft = sidebar.offsetWidth + 'px'; // Push content
+            }
+        }
+
+        function closeNav() {
+            sidebar.classList.remove('sidebar-open');
+            sidebar.classList.add('sidebar-closed');
+            if (window.innerWidth >= 768) { // md breakpoint
+                // content.style.marginLeft = '0'; // Reset content margin
+            }
+        }
+
+        if (openSidebarButton) {
+            openSidebarButton.addEventListener('click', openNav);
+        }
+        if (closeSidebarButton) {
+            closeSidebarButton.addEventListener('click', closeNav);
+        }
+
+        // Optional: Close sidebar if clicking outside of it on mobile
+        document.addEventListener('click', function(event) {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnOpenButton = openSidebarButton ? openSidebarButton.contains(event.target) : false;
+
+            if (!isClickInsideSidebar && !isClickOnOpenButton && sidebar.classList.contains('sidebar-open') && window.innerWidth < 768) {
+                closeNav();
+            }
+        });
+
+        // Adjust content margin based on sidebar state for larger screens (md and up)
+        // This is handled by Tailwind's md:relative and md:translate-x-0 for the sidebar,
+        // and the main content area naturally flows next to it.
+        // If you opted for a fixed sidebar that doesn't hide on md screens, you might need JS to adjust content margin.
+        // The current CSS setup aims for a common pattern: hidden on mobile (toggleable), visible and fixed on desktop.
+
+    </script>
+    </body>
+</html>

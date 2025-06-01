@@ -54,9 +54,9 @@ public class SecurityConfig {
                 .permitAll()
             )
             // Add CSRF protection (enabled by default in Spring Security)
-            // .csrf(csrf -> csrf
-            //     .ignoringRequestMatchers("/api/**") // Example: Disable CSRF for API endpoints if needed
-            // )
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/api/**") // Example: Disable CSRF for API endpoints if needed
+            )
             // Add headers configuration
             .headers(headers -> headers
                 .frameOptions(frameOptions -> frameOptions
