@@ -1,0 +1,34 @@
+<!-- templates/fragments/topbar.html -->
+<div th:fragment="topbar(userName)">
+    <header
+        class="bg-white shadow fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-6">
+        <!-- Logo / App Name -->
+        <div class="flex items-center space-x-4">
+            <button
+                class="md:hidden text-gray-600 hover:text-gray-900 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <a th:href="@{/}" class="text-xl font-bold text-slate-800">STEIN
+                HRMIS</a>
+        </div>
+
+        <!-- Welcome -->
+        <div class="hidden md:block text-gray-700 text-sm">
+            Welcome, <span class="font-semibold"
+                th:text="${userName ?: 'User'}">User</span>
+        </div>
+
+        <!-- Profile / Logout -->
+        <div class="flex items-center space-x-3">
+            <img class="h-8 w-8 rounded-full border"
+                src="https://placehold.co/100x100?text=U" alt="User image">
+            <form th:action="@{/logout}" method="post">
+                <button
+                    class="text-sm text-slate-600 hover:text-red-500 transition duration-150"
+                    type="submit">
+                    <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                </button>
+            </form>
+        </div>
+    </header>
+</div>
