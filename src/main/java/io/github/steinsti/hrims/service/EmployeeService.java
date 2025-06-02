@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
-
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +19,7 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Optional<Employee> getEmployeeById(UUID id) {
+    public Optional<Employee> getEmployeeById(Integer id) {
         return employeeRepository.findById(id);
     }
     
@@ -30,7 +27,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public void deleteEmployee(UUID id) {
+    public void deleteEmployee(Integer id) {
         employeeRepository.deleteById(id);
     }
 }
