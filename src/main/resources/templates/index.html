@@ -35,7 +35,9 @@
     </head>
     <body class="antialiased">
 
-        <header
+        <div th:replace="~{fragments/topbar-landing :: topbar}"></div>
+
+        <!-- <header
             class="bg-white shadow-sm py-4 px-6 md:px-10 sticky top-0 z-50 rounded-b-lg">
             <nav class="container mx-auto flex justify-between items-center">
                 <a href="#" th:href="@{/}"
@@ -113,7 +115,7 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </header> -->
 
         <section
             class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-20 md:py-32 text-center rounded-b-lg shadow-lg">
