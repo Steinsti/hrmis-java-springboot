@@ -11,112 +11,62 @@
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
-            body {
-                font-family: 'Inter', sans-serif;
-                background-color: #f8fafc;
-                color: #334155;
+        /* Custom scrollbar and font styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind's bg-gray-100 is #f3f4f6, slightly different */
+            color: #334155; /* Tailwind's text-gray-700 is #374151, text-gray-800 is #1f2937 */
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0; /* Tailwind's bg-gray-200 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8; /* Tailwind's bg-gray-400 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* Tailwind's bg-gray-600 */
+        }
+
+        /*
+           Tailwind CSS for sidebar responsiveness:
+           - On mobile (-translate-x-full by default, fixed position, z-30)
+           - On md screens and up (md:translate-x-0, md:relative, pushes content)
+        */
+        /* Sidebar state classes are handled by Tailwind utility classes in the HTML.
+           Use 'transform -translate-x-full' for closed, 'transform translate-x-0' for open.
+           On md screens and up, use 'md:translate-x-0 md:relative' in the HTML class attribute.
+        */
+        #sidebar.sidebar-closed {
+            transform: translateX(-100%);
+        }
+        #sidebar.sidebar-open {
+            transform: translateX(0);
+        }
+        @media (min-width: 768px) {
+            #sidebar {
+                transform: translateX(0);
+                position: relative;
             }
-            ::-webkit-scrollbar {
-                width: 8px;
-            }
-            ::-webkit-scrollbar-track {
-                background: #e2e8f0;
-                border-radius: 10px;
-            }
-            ::-webkit-scrollbar-thumb {
-                background: #94a3b8;
-                border-radius: 10px;
-            }
-            ::-webkit-scrollbar-thumb:hover {
-                background: #64748b;
-            }
-        </style>
+        }
+    </style>
     </head>
     <body class="bg-gray-100 font-sans antialiased">
 
-        <div class="min-h-screen flex flex-col">
-            <div
-                th:replace="~{fragments/sidebar :: sidebar(userRole, userName)}"></div>
+        <div class="min-h-screen flex">
+            <div id="sidebar"
+                th:replace="~{fragments/sidebar :: sidebar(${userRole}, ${userName})}"
+                class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0
+                    transition-transform duration-300 ease-in-out
+                    bg-slate-800 text-white w-64 space-y-6 py-7 px-2 z-30">
+            </div>
 
-            <!-- <aside id="sidebar"
-                class="sidebar fixed inset-y-0 left-0 z-30 w-64 bg-slate-800 text-white p-6 space-y-6 transform md:relative md:translate-x-0 sidebar-closed md:sidebar-open">
-                <div class="flex items-center justify-between">
-                    <a th:href="@{/}"
-                        class="text-2xl font-semibold text-white hover:text-slate-300 transition duration-150">
-                        <i class="fas fa-users-cog mr-2"></i>HRIMS Pro
-                    </a>
-                    <button id="closeSidebarButton"
-                        class="md:hidden text-slate-300 hover:text-white">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-
-                <nav class="space-y-2">
-                    <a th:href="@{/}"
-                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-200 bg-slate-700 rounded-lg hover:bg-slate-600 transition duration-150">
-                        <i class="fas fa-home w-5 h-5 mr-3"></i> Dashboard
-                    </a>
-                    <a th:href="@{/employees}"
-                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                        <i class="fas fa-users w-5 h-5 mr-3"></i> Employees
-                    </a>
-                    <a th:href="@{/departments}"
-                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                        <i class="fas fa-building w-5 h-5 mr-3"></i> Departments
-                    </a>
-                    <a th:href="@{/positions}"
-                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                        <i class="fas fa-user-tie w-5 h-5 mr-3"></i> Positions
-                    </a>
-                    <a th:href="@{/payroll}"
-                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                        <i class="fas fa-file-invoice-dollar w-5 h-5 mr-3"></i>
-                        Payroll
-                    </a>
-                    <a th:href="@{/leave}"
-                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                        <i class="fas fa-calendar-alt w-5 h-5 mr-3"></i> Leave
-                        Management
-                    </a>
-                    <a th:href="@{/recruitment}"
-                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                        <i class="fas fa-user-plus w-5 h-5 mr-3"></i>
-                        Recruitment
-                    </a>
-                    <a th:href="@{/reports}"
-                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                        <i class="fas fa-chart-bar w-5 h-5 mr-3"></i> Reports
-                    </a>
-                    <a th:href="@{/settings}"
-                        class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                        <i class="fas fa-cog w-5 h-5 mr-3"></i> Settings
-                    </a>
-                </nav>
-
-                <div
-                    class="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-700">
-                    <div class="flex items-center space-x-3">
-                        <img class="h-10 w-10 rounded-full object-cover"
-                            src="https://placehold.co/100x100/E2E8F0/4A5568?text=User"
-                            alt="User avatar"
-                            onerror="this.src='https://placehold.co/100x100/E2E8F0/4A5568?text=U'">
-                        <div>
-                            <p class="text-sm font-medium text-slate-200"
-                                th:text="${userName} ?: 'Admin User'">Admin
-                                User</p>
-                            <form th:action="@{/logout}" method="post">
-                                <button type="submit"
-                                    class="text-xs text-slate-400 hover:text-slate-200 transition duration-150">
-                                    Logout
-                                </button>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-            </aside> -->
-
-            <div id="content" class="flex-1 flex flex-col overflow-y-auto">
+            <div id="content"
+                class="flex-1 flex flex-col overflow-y-auto md:ml-64">
                 <header class="bg-white shadow-sm sticky top-0 z-20">
                     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="flex items-center justify-between h-16">
@@ -259,7 +209,6 @@
                                 </button>
                             </div>
                         </div>
-
                     </div>
                 </main>
 
@@ -279,31 +228,25 @@
         // JavaScript for sidebar toggle on mobile
         const sidebar = document.getElementById('sidebar');
         const openSidebarButton = document.getElementById('openSidebarButton');
-        const closeSidebarButton = document.getElementById('closeSidebarButton');
-        const content = document.getElementById('content'); // Main content area
+        const closeSidebarButton = document.getElementById('closeSidebarButton'); // This button needs to exist in your sidebar fragment
 
         function openNav() {
-            sidebar.classList.remove('sidebar-closed');
+            // Add 'sidebar-open' to trigger the mobile sidebar visibility
             sidebar.classList.add('sidebar-open');
-            // On mobile, the sidebar will overlay. On larger screens, it pushes content.
-            if (window.innerWidth < 768) { // md breakpoint
-                // Add overlay or similar effect if desired
-            } else {
-                // content.style.marginLeft = sidebar.offsetWidth + 'px'; // Push content
-            }
+            sidebar.classList.remove('sidebar-closed'); // Ensure 'sidebar-closed' is removed
         }
 
         function closeNav() {
-            sidebar.classList.remove('sidebar-open');
+            // Add 'sidebar-closed' to hide the mobile sidebar
             sidebar.classList.add('sidebar-closed');
-            if (window.innerWidth >= 768) { // md breakpoint
-                // content.style.marginLeft = '0'; // Reset content margin
-            }
+            sidebar.classList.remove('sidebar-open'); // Ensure 'sidebar-open' is removed
         }
 
         if (openSidebarButton) {
             openSidebarButton.addEventListener('click', openNav);
         }
+        // Ensure closeSidebarButton exists in your sidebar fragment, e.g.:
+        // <button id="closeSidebarButton" class="absolute top-0 right-0 p-4 md:hidden">X</button>
         if (closeSidebarButton) {
             closeSidebarButton.addEventListener('click', closeNav);
         }
@@ -313,16 +256,34 @@
             const isClickInsideSidebar = sidebar.contains(event.target);
             const isClickOnOpenButton = openSidebarButton ? openSidebarButton.contains(event.target) : false;
 
+            // Only close if on mobile, sidebar is open, and click is outside sidebar and not on the open button
             if (!isClickInsideSidebar && !isClickOnOpenButton && sidebar.classList.contains('sidebar-open') && window.innerWidth < 768) {
                 closeNav();
             }
         });
 
-        // Adjust content margin based on sidebar state for larger screens (md and up)
-        // This is handled by Tailwind's md:relative and md:translate-x-0 for the sidebar,
-        // and the main content area naturally flows next to it.
-        // If you opted for a fixed sidebar that doesn't hide on md screens, you might need JS to adjust content margin.
-        // The current CSS setup aims for a common pattern: hidden on mobile (toggleable), visible and fixed on desktop.
+        // Initial state on page load for mobile: ensure sidebar is closed
+        window.addEventListener('DOMContentLoaded', (event) => {
+             if (window.innerWidth < 768) {
+                sidebar.classList.add('sidebar-closed');
+             } else {
+                sidebar.classList.remove('sidebar-closed'); // On desktop, it should be open
+             }
+        });
+
+        // Handle resizing (e.g., rotating phone, resizing browser window)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth < 768) {
+                // If resized to mobile size, ensure it's closed by default
+                if (sidebar.classList.contains('sidebar-open')) {
+                    closeNav();
+                }
+            } else {
+                // If resized to desktop size, ensure it's open and relative
+                sidebar.classList.remove('sidebar-closed');
+                sidebar.classList.remove('sidebar-open'); // Remove mobile-specific classes
+            }
+        });
 
     </script>
     </body>
