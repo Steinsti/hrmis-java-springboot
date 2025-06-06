@@ -33,13 +33,13 @@
         }
 
         /*
-           Tailwind CSS for sidebar responsiveness:
-           - On mobile (-translate-x-full by default, fixed position, z-30)
-           - On md screens and up (md:translate-x-0, md:relative, pushes content)
+            Tailwind CSS for sidebar responsiveness:
+            - On mobile (-translate-x-full by default, fixed position, z-30)
+            - On md screens and up (md:translate-x-0, md:relative, pushes content)
         */
         /* Sidebar state classes are handled by Tailwind utility classes in the HTML.
-           Use 'transform -translate-x-full' for closed, 'transform translate-x-0' for open.
-           On md screens and up, use 'md:translate-x-0 md:relative' in the HTML class attribute.
+            Use 'transform -translate-x-full' for closed, 'transform translate-x-0' for open.
+            On md screens and up, use 'md:translate-x-0 md:relative' in the HTML class attribute.
         */
         #sidebar.sidebar-closed {
             transform: translateX(-100%);
@@ -54,6 +54,7 @@
             }
         }
     </style>
+        <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     </head>
     <body class="bg-gray-100 font-sans antialiased">
 
@@ -61,8 +62,8 @@
             <div id="sidebar"
                 th:replace="~{fragments/sidebar :: sidebar(${userRole}, ${userName})}"
                 class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0
-                    transition-transform duration-300 ease-in-out
-                    bg-slate-800 text-white w-64 space-y-6 py-7 px-2 z-30">
+                 transition-transform duration-300 ease-in-out
+                 bg-slate-800 text-white w-64 space-y-6 py-7 px-2 z-30">
             </div>
 
             <div id="content"
@@ -193,7 +194,10 @@
                                 Actions</h2>
                             <div class="flex flex-wrap gap-4">
                                 <button
-                                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
+                                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150"
+                                    hx-get="/admin/employees/new/modal"
+                                    hx-target="#modal-container"
+                                    hx-swap="outerHTML">
                                     <i class="fas fa-user-plus mr-2"></i> Add
                                     New Employee
                                 </button>
@@ -209,82 +213,83 @@
                                 </button>
                             </div>
                         </div>
+
+                        <div id="employee-list-container" class="mt-8">
+                            <div
+                                th:replace="~{employees/list :: employeeListContent}"></div>
+                        </div>
+
                     </div>
                 </main>
 
-                <footer class="bg-white border-t border-gray-200 mt-auto">
-                    <div
-                        class="container mx-auto px-6 py-4 text-center text-gray-500 text-sm">
-                        &copy; <span
-                            th:text="${#dates.year(#dates.createNow())}">2025</span>
-                        HRIMS Pro. All rights reserved.
-                        Developed in Nairobi, Kenya.
-                    </div>
-                </footer>
+                <div id="footer"
+                    th:replace="~{fragments/footer :: footer}"></div>
             </div>
         </div>
 
+        <div id="modal-container"></div>
+
         <script th:inline="javascript">
-        // JavaScript for sidebar toggle on mobile
-        const sidebar = document.getElementById('sidebar');
-        const openSidebarButton = document.getElementById('openSidebarButton');
-        const closeSidebarButton = document.getElementById('closeSidebarButton'); // This button needs to exist in your sidebar fragment
+    // JavaScript for sidebar toggle on mobile
+    const sidebar = document.getElementById('sidebar');
+    const openSidebarButton = document.getElementById('openSidebarButton');
+    const closeSidebarButton = document.getElementById('closeSidebarButton'); // This button needs to exist in your sidebar fragment
 
-        function openNav() {
-            // Add 'sidebar-open' to trigger the mobile sidebar visibility
-            sidebar.classList.add('sidebar-open');
-            sidebar.classList.remove('sidebar-closed'); // Ensure 'sidebar-closed' is removed
+    function openNav() {
+        // Add 'sidebar-open' to trigger the mobile sidebar visibility
+        sidebar.classList.add('sidebar-open');
+        sidebar.classList.remove('sidebar-closed'); // Ensure 'sidebar-closed' is removed
+    }
+
+    function closeNav() {
+        // Add 'sidebar-closed' to hide the mobile sidebar
+        sidebar.classList.add('sidebar-closed');
+        sidebar.classList.remove('sidebar-open'); // Ensure 'sidebar-open' is removed
+    }
+
+    if (openSidebarButton) {
+        openSidebarButton.addEventListener('click', openNav);
+    }
+    // Ensure closeSidebarButton exists in your sidebar fragment, e.g.:
+    // <button id="closeSidebarButton" class="absolute top-0 right-0 p-4 md:hidden">X</button>
+    if (closeSidebarButton) {
+        closeSidebarButton.addEventListener('click', closeNav);
+    }
+
+    // Optional: Close sidebar if clicking outside of it on mobile
+    document.addEventListener('click', function(event) {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnOpenButton = openSidebarButton ? openSidebarButton.contains(event.target) : false;
+
+        // Only close if on mobile, sidebar is open, and click is outside sidebar and not on the open button
+        if (!isClickInsideSidebar && !isClickOnOpenButton && sidebar.classList.contains('sidebar-open') && window.innerWidth < 768) {
+            closeNav();
         }
+    });
 
-        function closeNav() {
-            // Add 'sidebar-closed' to hide the mobile sidebar
+    // Initial state on page load for mobile: ensure sidebar is closed
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (window.innerWidth < 768) {
             sidebar.classList.add('sidebar-closed');
-            sidebar.classList.remove('sidebar-open'); // Ensure 'sidebar-open' is removed
+        } else {
+            sidebar.classList.remove('sidebar-closed'); // On desktop, it should be open
         }
+    });
 
-        if (openSidebarButton) {
-            openSidebarButton.addEventListener('click', openNav);
-        }
-        // Ensure closeSidebarButton exists in your sidebar fragment, e.g.:
-        // <button id="closeSidebarButton" class="absolute top-0 right-0 p-4 md:hidden">X</button>
-        if (closeSidebarButton) {
-            closeSidebarButton.addEventListener('click', closeNav);
-        }
-
-        // Optional: Close sidebar if clicking outside of it on mobile
-        document.addEventListener('click', function(event) {
-            const isClickInsideSidebar = sidebar.contains(event.target);
-            const isClickOnOpenButton = openSidebarButton ? openSidebarButton.contains(event.target) : false;
-
-            // Only close if on mobile, sidebar is open, and click is outside sidebar and not on the open button
-            if (!isClickInsideSidebar && !isClickOnOpenButton && sidebar.classList.contains('sidebar-open') && window.innerWidth < 768) {
+    // Handle resizing (e.g., rotating phone, resizing browser window)
+    window.addEventListener('resize', () => {
+        if (window.innerWidth < 768) {
+            // If resized to mobile size, ensure it's closed by default
+            if (sidebar.classList.contains('sidebar-open')) {
                 closeNav();
             }
-        });
+        } else {
+            // If resized to desktop size, ensure it's open and relative
+            sidebar.classList.remove('sidebar-closed');
+            sidebar.classList.remove('sidebar-open'); // Remove mobile-specific classes
+        }
+    });
 
-        // Initial state on page load for mobile: ensure sidebar is closed
-        window.addEventListener('DOMContentLoaded', (event) => {
-             if (window.innerWidth < 768) {
-                sidebar.classList.add('sidebar-closed');
-             } else {
-                sidebar.classList.remove('sidebar-closed'); // On desktop, it should be open
-             }
-        });
-
-        // Handle resizing (e.g., rotating phone, resizing browser window)
-        window.addEventListener('resize', () => {
-            if (window.innerWidth < 768) {
-                // If resized to mobile size, ensure it's closed by default
-                if (sidebar.classList.contains('sidebar-open')) {
-                    closeNav();
-                }
-            } else {
-                // If resized to desktop size, ensure it's open and relative
-                sidebar.classList.remove('sidebar-closed');
-                sidebar.classList.remove('sidebar-open'); // Remove mobile-specific classes
-            }
-        });
-
-    </script>
+</script>
     </body>
 </html>

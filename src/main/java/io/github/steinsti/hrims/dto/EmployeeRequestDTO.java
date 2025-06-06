@@ -35,4 +35,9 @@ public class EmployeeRequestDTO {
     @PastOrPresent(message = "Hire date cannot be in the future")
     private LocalDate hireDate;
 
+    
+    @Past(message = "Date of birth must be in the past")
+    @Adult // Custom annotation to ensure at least 18 years old
+    private LocalDate dateOfBirth;
+
 }

@@ -21,4 +21,5 @@ public class EmployeeResponseDTO {
     private String designation;
     private String department;
     private LocalDate hireDate;
+    private LocalDate dateOfBirth;
 }
