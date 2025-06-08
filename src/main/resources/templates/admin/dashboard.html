@@ -67,7 +67,7 @@
             </div>
 
             <div id="content"
-                class="flex-1 flex flex-col overflow-y-auto md:ml-64">
+                class="flex-1 flex flex-col overflow-y-auto md:ml-2">
                 <header class="bg-white shadow-sm sticky top-0 z-20">
                     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="flex items-center justify-between h-16">
@@ -194,10 +194,12 @@
                                 Actions</h2>
                             <div class="flex flex-wrap gap-4">
                                 <button
-                                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150"
+                                    class="bg-blue-500 cursor-pointer hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150"
                                     hx-get="/admin/employees/new/modal"
                                     hx-target="#modal-container"
-                                    hx-swap="outerHTML">
+                                    hx-swap="innerHTML"
+                                    hx-request='{"noCache":true}'>
+
                                     <i class="fas fa-user-plus mr-2"></i> Add
                                     New Employee
                                 </button>
@@ -216,7 +218,7 @@
 
                         <div id="employee-list-container" class="mt-8">
                             <div
-                                th:replace="~{employees/list :: employeeListContent}"></div>
+                                th:replace="~{employees/list :: employeeListContent(${employees})}"></div>
                         </div>
 
                     </div>
@@ -270,15 +272,18 @@
     // Initial state on page load for mobile: ensure sidebar is closed
     window.addEventListener('DOMContentLoaded', (event) => {
         if (window.innerWidth < 768) {
-            sidebar.classList.add('sidebar-closed');
+            closeNav();
+            // sidebar.classList.add('sidebar-closed');
         } else {
-            sidebar.classList.remove('sidebar-closed'); // On desktop, it should be open
+            openNav();
+            // sidebar.classList.remove('sidebar-closed'); // On desktop, it should be open
         }
     });
 
     // Handle resizing (e.g., rotating phone, resizing browser window)
     window.addEventListener('resize', () => {
         if (window.innerWidth < 768) {
+            console.log("resize event")
             // If resized to mobile size, ensure it's closed by default
             if (sidebar.classList.contains('sidebar-open')) {
                 closeNav();
@@ -290,6 +295,6 @@
         }
     });
 
-</script>
+        </script>
     </body>
 </html>

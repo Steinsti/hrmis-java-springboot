@@ -1,11 +1,13 @@
 package io.github.steinsti.hrims.controller;
 
+import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
+import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
 import io.github.steinsti.hrims.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
@@ -20,6 +22,8 @@ public class AdminController {
 
     @GetMapping("/dashboard")
     public String adminDashboard(Model  model){
+        List<EmployeeResponseDTO> employees = employeeService.getAllEmployees();
+        model.addAttribute("employees", employees);
     
         model.addAttribute("totalEmployees", employeeService.countAllEmployees());
 
