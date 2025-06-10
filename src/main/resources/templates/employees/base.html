@@ -1,0 +1,8 @@
+<div th:fragment="employeeBaseContent">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Employee Management</h1>
+
+    <div id="employee-content-area">
+        <div
+            th:replace="~{employees/list :: employeeListContent(${employees})}"></div>
+    </div>
+</div>

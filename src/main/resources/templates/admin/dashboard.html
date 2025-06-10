@@ -107,122 +107,130 @@
                         </div>
                     </div>
                 </header>
+                <div id="main-content">
+                    <main class="flex-1 p-6 md:p-8 lg:p-10">
+                        <div class="container mx-auto">
+                            <h1 class="text-3xl font-bold text-gray-800 mb-6"
+                                th:text="'Welcome to HRIMS, ' + (${userName} ?: 'Admin') + '!'">Welcome
+                                to HRIMS!</h1>
 
-                <main class="flex-1 p-6 md:p-8 lg:p-10">
-                    <div class="container mx-auto">
-                        <h1 class="text-3xl font-bold text-gray-800 mb-6"
-                            th:text="'Welcome to HRIMS, ' + (${userName} ?: 'Admin') + '!'">Welcome
-                            to HRIMS!</h1>
-
-                        <div
-                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             <div
-                                class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                <div class="flex items-center">
-                                    <div
-                                        class="p-3 rounded-full bg-blue-500 text-white mr-4">
-                                        <i class="fas fa-users text-2xl"></i>
+                                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <div
+                                    class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="p-3 rounded-full bg-blue-500 text-white mr-4">
+                                            <i
+                                                class="fas fa-users text-2xl"></i>
+                                        </div>
+                                        <div>
+                                            <p
+                                                class="text-sm text-gray-500">Total
+                                                Employees</p>
+                                            <p
+                                                class="text-2xl font-semibold text-gray-800"
+                                                th:text="${totalEmployees} ?: '1,250'">1,250</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p class="text-sm text-gray-500">Total
-                                            Employees</p>
-                                        <p
-                                            class="text-2xl font-semibold text-gray-800"
-                                            th:text="${totalEmployees} ?: '1,250'">1,250</p>
+                                </div>
+
+                                <div
+                                    class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="p-3 rounded-full bg-green-500 text-white mr-4">
+                                            <i
+                                                class="fas fa-building text-2xl"></i>
+                                        </div>
+                                        <div>
+                                            <p
+                                                class="text-sm text-gray-500">Departments</p>
+                                            <p
+                                                class="text-2xl font-semibold text-gray-800"
+                                                th:text="${departmentCount} ?: '15'">15</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="p-3 rounded-full bg-yellow-500 text-white mr-4">
+                                            <i
+                                                class="fas fa-hourglass-half text-2xl"></i>
+                                        </div>
+                                        <div>
+                                            <p
+                                                class="text-sm text-gray-500">Pending
+                                                Approvals</p>
+                                            <p
+                                                class="text-2xl font-semibold text-gray-800"
+                                                th:text="${pendingApprovals} ?: '8'">8</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="p-3 rounded-full bg-red-500 text-white mr-4">
+                                            <i
+                                                class="fas fa-calendar-check text-2xl"></i>
+                                        </div>
+                                        <div>
+                                            <p
+                                                class="text-sm text-gray-500">Upcoming
+                                                Holidays</p>
+                                            <p
+                                                class="text-2xl font-semibold text-gray-800"
+                                                th:text="${upcomingHolidays} ?: '3'">3</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div
-                                class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                <div class="flex items-center">
-                                    <div
-                                        class="p-3 rounded-full bg-green-500 text-white mr-4">
-                                        <i class="fas fa-building text-2xl"></i>
-                                    </div>
-                                    <div>
-                                        <p
-                                            class="text-sm text-gray-500">Departments</p>
-                                        <p
-                                            class="text-2xl font-semibold text-gray-800"
-                                            th:text="${departmentCount} ?: '15'">15</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="mt-8 bg-white p-6 rounded-xl shadow-lg">
+                                <h2
+                                    class="text-xl font-semibold text-gray-700 mb-4">Quick
+                                    Actions</h2>
+                                <div class="flex flex-wrap gap-4">
+                                    <button
+                                        class="bg-blue-500 cursor-pointer hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150"
+                                        hx-get="/admin/employees/new/modal"
+                                        hx-target="#modal-container"
+                                        hx-swap="innerHTML"
+                                        hx-request='{"noCache":true}'>
 
-                            <div
-                                class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                <div class="flex items-center">
-                                    <div
-                                        class="p-3 rounded-full bg-yellow-500 text-white mr-4">
+                                        <i class="fas fa-user-plus mr-2"></i>
+                                        Add
+                                        New Employee
+                                    </button>
+                                    <button
+                                        class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
                                         <i
-                                            class="fas fa-hourglass-half text-2xl"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-500">Pending
-                                            Approvals</p>
-                                        <p
-                                            class="text-2xl font-semibold text-gray-800"
-                                            th:text="${pendingApprovals} ?: '8'">8</p>
-                                    </div>
+                                            class="fas fa-calendar-plus mr-2"></i>
+                                        Request Leave
+                                    </button>
+                                    <button
+                                        class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
+                                        <i class="fas fa-file-alt mr-2"></i>
+                                        View
+                                        Payslip
+                                    </button>
                                 </div>
                             </div>
 
-                            <div
-                                class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                <div class="flex items-center">
-                                    <div
-                                        class="p-3 rounded-full bg-red-500 text-white mr-4">
-                                        <i
-                                            class="fas fa-calendar-check text-2xl"></i>
-                                    </div>
-                                    <div>
-                                        <p
-                                            class="text-sm text-gray-500">Upcoming
-                                            Holidays</p>
-                                        <p
-                                            class="text-2xl font-semibold text-gray-800"
-                                            th:text="${upcomingHolidays} ?: '3'">3</p>
-                                    </div>
-                                </div>
+                            <div id="employee-list-container" class="mt-8">
+                                <div
+                                    th:replace="~{employees/list :: employeeListContent(${employees})}"></div>
                             </div>
+
                         </div>
-
-                        <div class="mt-8 bg-white p-6 rounded-xl shadow-lg">
-                            <h2
-                                class="text-xl font-semibold text-gray-700 mb-4">Quick
-                                Actions</h2>
-                            <div class="flex flex-wrap gap-4">
-                                <button
-                                    class="bg-blue-500 cursor-pointer hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150"
-                                    hx-get="/admin/employees/new/modal"
-                                    hx-target="#modal-container"
-                                    hx-swap="innerHTML"
-                                    hx-request='{"noCache":true}'>
-
-                                    <i class="fas fa-user-plus mr-2"></i> Add
-                                    New Employee
-                                </button>
-                                <button
-                                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
-                                    <i class="fas fa-calendar-plus mr-2"></i>
-                                    Request Leave
-                                </button>
-                                <button
-                                    class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
-                                    <i class="fas fa-file-alt mr-2"></i> View
-                                    Payslip
-                                </button>
-                            </div>
-                        </div>
-
-                        <div id="employee-list-container" class="mt-8">
-                            <div
-                                th:replace="~{employees/list :: employeeListContent(${employees})}"></div>
-                        </div>
-
-                    </div>
-                </main>
+                    </main>
+                </div>
 
                 <div id="footer"
                     th:replace="~{fragments/footer :: footer}"></div>
@@ -294,6 +302,44 @@
             sidebar.classList.remove('sidebar-open'); // Remove mobile-specific classes
         }
     });
+
+     // Function to highlight the active navigation link
+        function highlightNavLink(clickedElement) {
+            // Remove 'active-link' class from all links
+            document.querySelectorAll('#sidebar nav a').forEach(link => {
+                link.classList.remove('bg-slate-700', 'text-slate-100');
+                link.classList.add('text-slate-300', 'hover:bg-slate-700', 'hover:text-slate-100'); // Re-add default styling
+            });
+
+            // Add 'active-link' class to the clicked link
+            clickedElement.classList.add('bg-slate-700', 'text-slate-100');
+            clickedElement.classList.remove('text-slate-300', 'hover:bg-slate-700', 'hover:text-slate-100'); // Remove default styling
+        }
+
+        // Initial highlighting based on current URL on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('#sidebar nav a').forEach(link => {
+                const linkHref = link.getAttribute('th:href') || link.getAttribute('href');
+                if (linkHref && currentPath.startsWith(linkHref)) {
+                    highlightNavLink(link);
+                }
+            });
+        });
+
+        // Listen for HTMX swaps to re-evaluate active link if the URL changes
+        document.body.addEventListener('htmx:afterSwap', (event) => {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('#sidebar nav a').forEach(link => {
+                const linkHref = link.getAttribute('th:href') || link.getAttribute('href');
+                // Use startsWith for '/employees' to match '/employees'
+                // and also for '/admin/dashboard'
+                if (linkHref && currentPath.startsWith(linkHref)) {
+                    highlightNavLink(link);
+                }
+            });
+        })
+
 
         </script>
     </body>

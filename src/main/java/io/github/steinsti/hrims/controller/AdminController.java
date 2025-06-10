@@ -12,6 +12,7 @@ import io.github.steinsti.hrims.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -46,5 +47,13 @@ public class AdminController {
         model.addAttribute("employeeRequestDTO", new EmployeeRequestDTO());
         return "fragments/modals/employee-form-modal :: employeeFormModal";
     }
+
+    @GetMapping("/dashboard/employees")
+    public String getEmployeeBasePage(Model model) {
+        List<EmployeeResponseDTO> employees = employeeService.getAllEmployees();
+        model.addAttribute("employees", employees);
+        return "employees/base :: employeeBaseContent";
+    }
+    
     
 }

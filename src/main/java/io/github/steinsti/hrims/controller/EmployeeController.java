@@ -26,12 +26,12 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMiN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public String listEmployees(Model model){
 
         List<EmployeeResponseDTO> employees = employeeService.getAllEmployees();
         model.addAttribute("employees", employees);
-        return "employees/list";
+        return "employees/base :: employeeBaseContent";
     }
 
     @PostMapping("/create")
