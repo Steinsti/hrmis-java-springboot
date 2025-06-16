@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
 import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
 import io.github.steinsti.hrims.service.EmployeeService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 
@@ -33,9 +34,11 @@ public class AdminController {
         model.addAttribute("pendingApprovals", 8); // Placeholder
         model.addAttribute("upcomingHolidays", 3); // Placeholder
 
+       
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         String userRole = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
             .findFirst().map(Object::toString).orElse("UNKNOWN");
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+
 
         model.addAttribute("userRole", userRole);
         model.addAttribute("userName", userName);
@@ -49,11 +52,19 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard/employees")
-    public String getEmployeeBasePage(Model model) {
+    public String getEmployeeBasePage(Model model, HttpServletRequest request) {
         List<EmployeeResponseDTO> employees = employeeService.getAllEmployees();
+        String userRole = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+            .findFirst().map(Object::toString).orElse("UNKNOWN");
+
         model.addAttribute("employees", employees);
-        return "employees/base :: employeeBaseContent";
+        model.addAttribute("userRole", userRole);
+
+        // check if request is from HTMX
+        if ("true".equals(request.getHeader("HX-Request"))){
+            return "employees/base :: employeeBaseContent";
+        }else{
+            return "admin/tabs/employeesTab";
+        } 
     }
-    
-    
 }

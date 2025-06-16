@@ -1,34 +1,41 @@
-<!-- templates/fragments/topbar.html -->
-<div th:fragment="topbar(userName)">
-    <header
-        class="bg-white shadow fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-6">
-        <!-- Logo / App Name -->
-        <div class="flex items-center space-x-4">
-            <button
-                class="md:hidden text-gray-600 hover:text-gray-900 focus:outline-none">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-            <a th:href="@{/}" class="text-xl font-bold text-slate-800">STEIN
-                HRMIS</a>
-        </div>
-
-        <!-- Welcome -->
-        <div class="hidden md:block text-gray-700 text-sm">
-            Welcome, <span class="font-semibold"
-                th:text="${userName ?: 'User'}">User</span>
-        </div>
-
-        <!-- Profile / Logout -->
-        <div class="flex items-center space-x-3">
-            <img class="h-8 w-8 rounded-full border"
-                src="https://placehold.co/100x100?text=U" alt="User image">
-            <form th:action="@{/logout}" method="post">
-                <button
-                    class="text-sm text-slate-600 hover:text-red-500 transition duration-150"
-                    type="submit">
-                    <i class="fas fa-sign-out-alt mr-1"></i> Logout
+<div th:fragment="topbar">
+    <header class="bg-white shadow-sm sticky top-0 z-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <button id="openSidebarButton"
+                    class="md:hidden text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                    <span class="sr-only">Open sidebar</span>
+                    <i class="fas fa-bars text-xl"></i>
                 </button>
-            </form>
+
+                <div
+                    class="hidden md:flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
+                    <div class="max-w-lg w-full lg:max-w-xs">
+                        <label for="search"
+                            class="sr-only">Search</label>
+                        <div class="relative">
+                            <div
+                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i
+                                    class="fas fa-search text-gray-400"></i>
+                            </div>
+                            <input id="search" name="search"
+                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                placeholder="Search..."
+                                type="search">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center ml-auto md:ml-4">
+                    <button
+                        class="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <span class="sr-only">View
+                            notifications</span>
+                        <i class="far fa-bell text-xl"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 </div>
