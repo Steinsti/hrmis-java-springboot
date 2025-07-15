@@ -1,0 +1,196 @@
+<!-- departments/departmentbase.html -->
+<div th:fragment="department-base">
+    <!-- Department base content goes here -->
+    <h2 class="text-xl font-semibold ">Departments</h2>
+    <button
+        class="bg-blue-500 cursor-pointer hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
+        + Add Department
+    </button>
+
+    <div>
+        <main class="flex-1 p-8">
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h1
+                    class="text-3xl font-semibold text-gray-800 mb-6">Departments
+                    Overview</h1>
+
+                <!-- Search and Filter Bar -->
+                <div
+                    class="flex flex-col sm:flex-row justify-between items-center mb-6 space-y-4 sm:space-y-0 sm:space-x-4">
+                    <div class="relative w-full sm:w-1/2">
+                        <input type="text" placeholder="Search departments..."
+                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <!-- Search icon placeholder -->
+                        <span
+                            class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
+                    </div>
+                    <div class="relative w-full sm:w-1/3">
+                        <select
+                            class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-blue-500">
+                            <option>Filter by Location</option>
+                            <option>Main Office</option>
+                            <option>Tech Hub</option>
+                            <option>Downtown Office</option>
+                            <option>Regional Branches</option>
+                            <option>Remote/Call Center</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <!-- Dropdown arrow placeholder -->
+                            ▼
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Department Card 1 -->
+                    <div
+                        class="bg-blue-100 p-6 rounded-lg shadow-md border border-blue-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center mb-3">
+                                <h2
+                                    class="text-xl font-bold text-blue-800">Human
+                                    Resources</h2>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Manages
+                                employee relations, recruitment, and
+                                benefits.</p>
+                        </div>
+                        <div
+                            class="flex justify-between items-center text-gray-600 text-sm mt-auto">
+                            <span>Employees: <span
+                                    class="font-medium">45</span></span>
+                            <span>Location: <span class="font-medium">Main
+                                    Office</span></span>
+                            <button
+                                class="text-blue-600 hover:text-blue-800 font-semibold text-sm">View
+                                Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Department Card 2 -->
+                    <div
+                        class="bg-green-50 p-6 rounded-lg shadow-md border border-green-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center mb-3">
+                                <h2
+                                    class="text-xl font-bold text-green-800">Engineering</h2>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Responsible
+                                for product development and technical
+                                innovation.</p>
+                        </div>
+                        <div
+                            class="flex justify-between items-center text-gray-600 text-sm mt-auto">
+                            <span>Employees: <span
+                                    class="font-medium">120</span></span>
+                            <span>Location: <span class="font-medium">Tech
+                                    Hub</span></span>
+                            <button
+                                class="text-blue-600 hover:text-blue-800 font-semibold text-sm">View
+                                Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Department Card 3 -->
+                    <div
+                        class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center mb-3">
+                                <h2
+                                    class="text-xl font-bold text-purple-800">Marketing</h2>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Handles brand
+                                promotion, campaigns, and market research.</p>
+                        </div>
+                        <div
+                            class="flex justify-between items-center text-gray-600 text-sm mt-auto">
+                            <span>Employees: <span
+                                    class="font-medium">30</span></span>
+                            <span>Location: <span class="font-medium">Downtown
+                                    Office</span></span>
+                            <button
+                                class="text-blue-600 hover:text-blue-800 font-semibold text-sm">View
+                                Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Department Card 4 -->
+                    <div
+                        class="bg-yellow-50 p-6 rounded-lg shadow-md border border-yellow-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center mb-3">
+                                <h2
+                                    class="text-xl font-bold text-yellow-800">Finance</h2>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Manages
+                                financial operations, budgeting, and
+                                reporting.</p>
+                        </div>
+                        <div
+                            class="flex justify-between items-center text-gray-600 text-sm mt-auto">
+                            <span>Employees: <span
+                                    class="font-medium">25</span></span>
+                            <span>Location: <span class="font-medium">Main
+                                    Office</span></span>
+                            <button
+                                class="text-blue-600 hover:text-blue-800 font-semibold text-sm">View
+                                Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Department Card 5 -->
+                    <div
+                        class="bg-red-50 p-6 rounded-lg shadow-md border border-red-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center mb-3">
+                                <h2
+                                    class="text-xl font-bold text-red-800">Customer
+                                    Support</h2>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Provides
+                                assistance and resolves customer inquiries.</p>
+                        </div>
+                        <div
+                            class="flex justify-between items-center text-gray-600 text-sm mt-auto">
+                            <span>Employees: <span
+                                    class="font-medium">70</span></span>
+                            <span>Location: <span
+                                    class="font-medium">Remote/Call
+                                    Center</span></span>
+                            <button
+                                class="text-blue-600 hover:text-blue-800 font-semibold text-sm">View
+                                Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Department Card 6 -->
+                    <div
+                        class="bg-indigo-50 p-6 rounded-lg shadow-md border border-indigo-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center mb-3">
+                                <h2
+                                    class="text-xl font-bold text-indigo-800">Product
+                                    Management</h2>
+                            </div>
+                            <p class="text-gray-700 text-sm mb-4">Defines
+                                product vision, strategy, and roadmap.</p>
+                        </div>
+                        <div
+                            class="flex justify-between items-center text-gray-600 text-sm mt-auto">
+                            <span>Employees: <span
+                                    class="font-medium">15</span></span>
+                            <span>Location: <span class="font-medium">Tech
+                                    Hub</span></span>
+                            <button
+                                class="text-blue-600 hover:text-blue-800 font-semibold text-sm">View
+                                Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Add more content or fragments as needed -->
+</div>

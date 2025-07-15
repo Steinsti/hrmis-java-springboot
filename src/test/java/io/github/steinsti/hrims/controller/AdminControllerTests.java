@@ -28,7 +28,7 @@ class AdminControllerTest {
     void setUp() {
         employeeService = mock(EmployeeService.class);
         model = mock(Model.class);
-        adminController = new AdminController(employeeService);
+        adminController = new AdminController(employeeService, null);
 
         // Set up a mock authentication context
         SecurityContextHolder.getContext().setAuthentication(

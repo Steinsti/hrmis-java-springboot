@@ -6,12 +6,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import io.github.steinsti.hrims.dto.DepartmentsResponseDTO;
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
 import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
+import io.github.steinsti.hrims.service.DepartmentService;
 import io.github.steinsti.hrims.service.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
+
 
 
 @Controller
@@ -21,6 +24,7 @@ import org.springframework.ui.Model;
 public class AdminController {
 
     private final EmployeeService employeeService;
+    private final DepartmentService departmentService;
 
     @GetMapping("/dashboard")
     public String adminDashboard(Model  model){
@@ -29,7 +33,7 @@ public class AdminController {
     
         model.addAttribute("totalEmployees", employeeService.countAllEmployees());
 
-        //TODO: Add methods to EmployeeService or other services for departmentCount, pendingApprovals, upcomingHolidays
+        //Add methods to EmployeeService or other services for departmentCount, pendingApprovals, upcomingHolidays
         model.addAttribute("departmentCount", 15); // Placeholder
         model.addAttribute("pendingApprovals", 8); // Placeholder
         model.addAttribute("upcomingHolidays", 3); // Placeholder
@@ -67,4 +71,26 @@ public class AdminController {
             return "admin/tabs/employeesTab";
         } 
     }
+
+    
+    @GetMapping("/dashboard/departments")
+    public String getDepartments(Model model, HttpServletRequest request) {
+        
+    List<DepartmentsResponseDTO> departments = departmentService.getDepartments();
+    model.addAttribute("departments", departments);
+
+    String userRole = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+        .findFirst().map(Object::toString).orElse("UNKNOWN");
+    String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+
+    model.addAttribute("userRole", userRole);
+    model.addAttribute("userName", userName);
+
+     if ("true".equals(request.getHeader("HX-Request"))) {
+        return "departments/departmentbase :: department-base";
+    } else {
+        return "admin/tabs/departmentsTab";
+    } 
+    }
+    
 }
