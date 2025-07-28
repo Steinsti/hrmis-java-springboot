@@ -1,17 +1,23 @@
 package io.github.steinsti.hrims.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentsResponseDTO {
+@AllArgsConstructor
+@Builder
+public class DepartmentsRequestDTO {
 
-    private int id;
+    @NotBlank(message = "Department name cannot be blank")
     private String departmentName;
+
+    @NotBlank(message = "Department Code cannot be blank")
     private String departmentCode;
+
     private String description;
 
 }

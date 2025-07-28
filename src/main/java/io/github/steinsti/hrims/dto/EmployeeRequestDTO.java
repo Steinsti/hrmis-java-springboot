@@ -2,7 +2,10 @@ package io.github.steinsti.hrims.dto;
 
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,7 +38,6 @@ public class EmployeeRequestDTO {
     @PastOrPresent(message = "Hire date cannot be in the future")
     private LocalDate hireDate;
 
-    
     @Past(message = "Date of birth must be in the past")
     @Adult // Custom annotation to ensure at least 18 years old
     private LocalDate dateOfBirth;
