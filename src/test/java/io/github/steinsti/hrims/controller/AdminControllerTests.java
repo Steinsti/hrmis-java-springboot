@@ -2,6 +2,8 @@ package io.github.steinsti.hrims.controller;
 
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
 import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
+import io.github.steinsti.hrims.service.AdminDashboardService;
+import io.github.steinsti.hrims.service.DepartmentService;
 import io.github.steinsti.hrims.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,39 +17,43 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
-
-
 class AdminControllerTest {
 
     private EmployeeService employeeService;
     private Model model;
     private AdminController adminController;
+    private DepartmentService departmentService;
+    private AdminDashboardService adminDashboardService;
 
     @BeforeEach
     void setUp() {
         employeeService = mock(EmployeeService.class);
+        departmentService = mock(DepartmentService.class);
+        adminDashboardService = mock(AdminDashboardService.class);
         model = mock(Model.class);
-        adminController = new AdminController(employeeService, null);
+        adminController = new AdminController(employeeService, departmentService, adminDashboardService);
 
         // Set up a mock authentication context
         SecurityContextHolder.getContext().setAuthentication(
-            new UsernamePasswordAuthenticationToken(
-                "adminUser",
-                "password",
-                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
-            )
+                new UsernamePasswordAuthenticationToken(
+                        "adminUser",
+                        "password",
+                        List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
+                )
         );
     }
 
     @Test
     void adminDashboard_shouldAddAttributesAndReturnDashboardView() {
         List<EmployeeResponseDTO> employees = Arrays.asList(
-            mock(EmployeeResponseDTO.class),
-            mock(EmployeeResponseDTO.class)
+                mock(EmployeeResponseDTO.class),
+                mock(EmployeeResponseDTO.class)
         );
         when(employeeService.getAllEmployees()).thenReturn(employees);
         when(employeeService.countAllEmployees()).thenReturn(2L);
+        when(adminDashboardService.getDepartmentCount()).thenReturn(15);
+        when(adminDashboardService.getPendingApprovals()).thenReturn(8);
+        when(adminDashboardService.getUpcomingHolidays()).thenReturn(3);
 
         String view = adminController.adminDashboard(model);
 
@@ -72,4 +78,3 @@ class AdminControllerTest {
         assertNotNull(captor.getValue());
     }
 }
-

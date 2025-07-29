@@ -23,7 +23,7 @@ public class EmployeeRequestDTO {
     @NotBlank(message = "last name cannot be blank")
     private String lastName;
 
-    @Email(message = "Email maust be valid")
+    @Email(message = "Email must be valid")
     private String email;
 
     @NotBlank(message = "Phone number is required")
