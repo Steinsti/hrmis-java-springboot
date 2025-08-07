@@ -1,7 +1,9 @@
 package io.github.steinsti.hrims.model;
 
-
 public enum Role {
     ADMIN,
-    EMPLOYEE
+    EMPLOYEE,
+    MANAGER,
+    SUPERVISOR,
+    HR_ADMIN
 }
