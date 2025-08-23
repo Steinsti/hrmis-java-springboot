@@ -1,4 +1,12 @@
-package io.github.steinsti.hrims.service;
+package io.github.steinsti.hrims.services;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
 import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
@@ -6,20 +14,13 @@ import io.github.steinsti.hrims.model.Employee;
 import io.github.steinsti.hrims.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-
-    public List<EmployeeResponseDTO> getAllEmployees(){
+    public List<EmployeeResponseDTO> getAllEmployees() {
         return employeeRepository.findAll().stream().map(this::convertToResponseDTO).collect(Collectors.toList());
     }
 
@@ -38,7 +39,7 @@ public class EmployeeService {
                     return dto;
                 });
     }
-    
+
     public EmployeeResponseDTO createEmployee(EmployeeRequestDTO requestDTO) {
         Employee employee = new Employee();
         employee.setFirstName(requestDTO.getFirstName());
@@ -58,7 +59,7 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    public long countAllEmployees(){
+    public long countAllEmployees() {
         return employeeRepository.count();
     }
 
@@ -75,4 +76,18 @@ public class EmployeeService {
         responseDTO.setDateOfBirth(employee.getDateOfBirth());
         return responseDTO;
     }
+
+    public String getCurrentUserName() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth != null ? auth.getName() : "UNKNOWN";
+    }
+
+    public String getCurrentUserRole() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities() != null && !auth.getAuthorities().isEmpty()) {
+            return auth.getAuthorities().iterator().next().getAuthority();
+        }
+        return "UNKNOWN";
+    }
+
 }

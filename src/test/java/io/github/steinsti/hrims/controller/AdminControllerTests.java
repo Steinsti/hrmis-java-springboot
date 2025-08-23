@@ -2,9 +2,10 @@ package io.github.steinsti.hrims.controller;
 
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
 import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
-import io.github.steinsti.hrims.service.AdminDashboardService;
-import io.github.steinsti.hrims.service.DepartmentService;
-import io.github.steinsti.hrims.service.EmployeeService;
+import io.github.steinsti.hrims.services.AdminDashboardService;
+import io.github.steinsti.hrims.services.DepartmentService;
+import io.github.steinsti.hrims.services.EmployeeService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

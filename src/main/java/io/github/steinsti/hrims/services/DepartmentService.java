@@ -1,4 +1,4 @@
-package io.github.steinsti.hrims.service;
+package io.github.steinsti.hrims.services;
 
 import java.util.List;
 import java.util.stream.Collectors;

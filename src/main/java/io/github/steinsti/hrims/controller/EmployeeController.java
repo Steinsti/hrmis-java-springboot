@@ -1,10 +1,8 @@
 package io.github.steinsti.hrims.controller;
 
-import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
-import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
-import io.github.steinsti.hrims.service.EmployeeService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +10,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-import java.util.UUID;
-import org.springframework.web.bind.annotation.PostMapping;
+import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
+import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
+import io.github.steinsti.hrims.services.EmployeeService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,9 +26,18 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
+    @GetMapping("/dashboard")
+    public String employeeDashboard(Model model) {
+        model.addAttribute("userName", employeeService.getCurrentUserName());
+        model.addAttribute("userRole", employeeService.getCurrentUserRole());
+
+        return "employees/employee-dashboard";
+    }
+
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public String listEmployees(Model model){
+    @PreAuthorize("hasAnyRole('ADMIN', 'HR_ADMIN')")
+
+    public String listEmployees(Model model) {
 
         List<EmployeeResponseDTO> employees = employeeService.getAllEmployees();
         model.addAttribute("employees", employees);
@@ -35,9 +45,10 @@ public class EmployeeController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ADMIN', 'HR_ADMIN')")
     public String createEmployee(@Valid @ModelAttribute("employeeRequestDTO") EmployeeRequestDTO employeeRequestDTO, BindingResult result, Model model) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             // If there are validation errors, return the form fragment again
             // This allows the modal to show errors without closing
             model.addAttribute("employeeRequestDTO", employeeRequestDTO);
@@ -45,7 +56,7 @@ public class EmployeeController {
             // The modal fragment expects 'employees/form :: employeeForm'
             // We need to decide if the modal wrapper should handle the errors or the form itself.
             // For simplicity, let's assume the form handles its own errors visually.
-            model.addAttribute("errorMessage","Please correct the form errors");
+            model.addAttribute("errorMessage", "Please correct the form errors");
             return "employees/form :: employeeForm";
         }
 
@@ -58,7 +69,7 @@ public class EmployeeController {
             return "employees/list :: employeeListContent";
 
         } catch (Exception e) {
-            // For now, let's just re-throw or log and return a basic error if we don't have proper error display in modal
+            // For now, let's just re-throw and return a basic error since we don't have proper error display in modal
             throw new RuntimeException("Failed to create employee", e);
         }
     }
@@ -68,9 +79,8 @@ public class EmployeeController {
     //     employeeService.saveEmployee(employee);
     //     return "redirect:/employees";
     // }
-
     @GetMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable UUID id) {
         return "redirect:/employees";
-    }    
+    }
 }

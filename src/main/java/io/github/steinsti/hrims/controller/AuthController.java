@@ -1,18 +1,17 @@
 package io.github.steinsti.hrims.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-// import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import io.github.steinsti.hrims.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import io.github.steinsti.hrims.model.Role;
-import io.github.steinsti.hrims.model.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import io.github.steinsti.hrims.model.Role;
+import io.github.steinsti.hrims.model.User;
+import io.github.steinsti.hrims.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,25 +27,31 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user) {
+    public String register(@ModelAttribute User user, org.springframework.ui.Model model) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            model.addAttribute("error", "User already exists");
+            return "auth/register";
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.ADMIN);
+        user.setRole(Role.EMPLOYEE);
         userRepository.save(user);
         return "redirect:/login";
     }
 
     @GetMapping("login")
-    public String showLoginForm(){
+    public String showLoginForm() {
         return "auth/login";
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(@AuthenticationPrincipal UserDetails userDetails){
-        if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+    public String dashboard(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
             return "redirect:/admin/dashboard";
-        }else{
-            return "redirect:/employee/dashboard";
+        } else if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_EMPLOYEE"))) {
+            return "redirect:/employees/dashboard";
+        } else {
+            // Optionally log the error or handle it as needed
+            return "redirect:/login?error=unauthorized";
         }
     }
 }
-    

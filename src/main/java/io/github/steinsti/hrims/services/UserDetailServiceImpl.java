@@ -1,4 +1,4 @@
-package io.github.steinsti.hrims.service;
+package io.github.steinsti.hrims.services;
 
 import io.github.steinsti.hrims.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +10,10 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserDetailServiceImpl  implements UserDetailsService{
+public class UserDetailServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User userEntity = userRepository.findByUsername(username)

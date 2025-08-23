@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.github.steinsti.hrims.dto.DepartmentsResponseDTO;
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
 import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
-import io.github.steinsti.hrims.service.AdminDashboardService;
-import io.github.steinsti.hrims.service.DepartmentService;
-import io.github.steinsti.hrims.service.EmployeeService;
+import io.github.steinsti.hrims.services.AdminDashboardService;
+import io.github.steinsti.hrims.services.DepartmentService;
+import io.github.steinsti.hrims.services.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 

@@ -23,8 +23,13 @@ public class Employee {
 
     private String firstName;
     private String lastName;
+
+    @jakarta.persistence.Column(unique = true)
     private String email;
+
+    @jakarta.persistence.Column(unique = true)
     private String phoneNumber;
+
     private LocalDate dateOfBirth;
     private String designation;
     private String department;

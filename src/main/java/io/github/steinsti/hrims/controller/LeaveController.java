@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import io.github.steinsti.hrims.dto.LeaveRequestDTO;
 import io.github.steinsti.hrims.model.Employee;
-import io.github.steinsti.hrims.service.LeaveRequestService;
+import io.github.steinsti.hrims.services.LeaveRequestService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
