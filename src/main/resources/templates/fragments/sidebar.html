@@ -1,6 +1,6 @@
 <!-- Sidebar Fragment -->
 
-<div th:fragment="sidebar(userRole, userName)">
+<div th:fragment="sidebar(userRole, userName, navContent)">
     <aside id="sidebar"
         class="sidebar h-screen fixed inset-y-0 left-0 z-30 w-64 bg-slate-800 text-white p-6 space-y-6">
         <div class="flex items-center justify-between">
@@ -14,69 +14,8 @@
                 <i class="fas fa-times text-xl"></i>
             </button>
         </div>
-        <nav class="space-y-4">
-
-            <div th:if="${userRole == 'ROLE_ADMIN'}" class="space-y-2">
-                <a th:href="@{/admin/dashboard}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-200 bg-slate-700 rounded-lg hover:bg-slate-600 transition duration-150">
-                    <i class="fas fa-home w-5 h-5 mr-3"></i> Dashboard
-                </a>
-                <a th:href="@{/admin/dashboard/employees}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150"
-                    hx-get="/admin/dashboard/employees"
-                    hx-target="#main-content"
-                    hx-push-url="true"
-                    hx-swap="innerHTML">
-                    <i class="fas fa-users w-5 h-5 mr-3"></i> Employees
-                </a>
-                <a th:href="@{/admin/dashboard/departments}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150"
-                    hx-get="/admin/dashboard/departments"
-                    hx-target="#main-content" hx-push-url="true"
-                    hx-swap="innerHTML">
-                    <i class="fas fa-building w-5 h-5 mr-3"></i> Departments
-                </a>
-                <a th:href="@{/positions}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                    <i class="fas fa-user-tie w-5 h-5 mr-3"></i> Positions
-                </a>
-                <a th:href="@{/payroll}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                    <i class="fas fa-file-invoice-dollar w-5 h-5 mr-3"></i>
-                    Payroll
-                </a>
-                <a th:href="@{/leave}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                    <i class="fas fa-calendar-alt w-5 h-5 mr-3"></i> Leave
-                    Management
-                </a>
-                <a th:href="@{/recruitment}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                    <i class="fas fa-user-plus w-5 h-5 mr-3"></i>
-                    Recruitment
-                </a>
-                <a th:href="@{/reports}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                    <i class="fas fa-chart-bar w-5 h-5 mr-3"></i> Reports
-                </a>
-                <a th:href="@{/settings}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
-                    <i class="fas fa-cog w-5 h-5 mr-3"></i> Settings
-                </a>
-            </div>
-            <div th:if="${userRole == 'ROLE_EMPLOYEE'}" class="space-y-2">
-                <a th:href="@{/profile}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150"><i
-                        class="fas fa-id-badge mr-3"></i> My Profile</a>
-                <a th:href="@{/leave}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150"><i
-                        class="fas fa-calendar-alt mr-3"></i> My Leave</a>
-                <a th:href="@{/payslips}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150"><i
-                        class="fas fa-money-check-alt mr-3"></i> Payslips</a>
-            </div>
-        </nav>
-
+        <!-- Injected nav content -->
+        <nav th:replace="${navContent}"></nav>
         <div
             class="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-700">
             <div class="flex items-center space-x-3">

@@ -60,7 +60,7 @@
 
         <div class="min-h-screen flex">
             <div id="sidebar"
-                th:replace="~{fragments/sidebar :: sidebar(${userRole}, ${userName})}"
+                th:replace="~{fragments/sidebar :: sidebar(${userRole}, ${userName}, ~{fragments/navigation/adminNav :: adminNav})}"
                 class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0
                  transition-transform duration-300 ease-in-out
                  bg-slate-800 text-white w-64 space-y-6 py-7 px-2 z-30">
@@ -68,45 +68,10 @@
 
             <div id="content"
                 class="flex-1 flex flex-col overflow-y-auto md:ml-2">
-                <header class="bg-white shadow-sm sticky top-0 z-20">
-                    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="flex items-center justify-between h-16">
-                            <button id="openSidebarButton"
-                                class="md:hidden text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                                <span class="sr-only">Open sidebar</span>
-                                <i class="fas fa-bars text-xl"></i>
-                            </button>
-
-                            <div
-                                class="hidden md:flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
-                                <div class="max-w-lg w-full lg:max-w-xs">
-                                    <label for="search"
-                                        class="sr-only">Search</label>
-                                    <div class="relative">
-                                        <div
-                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <i
-                                                class="fas fa-search text-gray-400"></i>
-                                        </div>
-                                        <input id="search" name="search"
-                                            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            placeholder="Search..."
-                                            type="search">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center ml-auto md:ml-4">
-                                <button
-                                    class="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    <span class="sr-only">View
-                                        notifications</span>
-                                    <i class="far fa-bell text-xl"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </header>
+                <div id="header"
+                    class="w-full"
+                    th:replace="~{fragments/common-header :: header}">
+                </div>
                 <div id="main-content">
                     <main class="flex-1 p-6 md:p-8 lg:p-10">
                         <div class="container mx-auto">
@@ -203,7 +168,6 @@
                                         hx-target="#modal-container"
                                         hx-swap="innerHTML"
                                         hx-request='{"noCache":true}'>
-
                                         <i class="fas fa-user-plus mr-2"></i>
                                         Add
                                         New Employee
@@ -236,9 +200,7 @@
                     th:replace="~{fragments/footer :: footer}"></div>
             </div>
         </div>
-
         <div id="modal-container"></div>
-
         <script src="/js/sidebar.js"></script>
     </body>
 </html>

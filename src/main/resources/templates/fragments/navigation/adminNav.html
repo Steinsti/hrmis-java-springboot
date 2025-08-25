@@ -1,0 +1,25 @@
+ <!-- Admin nav fragment -->
+<th:block th:fragment="adminNav">
+    <div class="space-y-2">
+        <a th:href="@{/admin/dashboard}"
+            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+            <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+        </a>
+        <a th:href="@{/admin/dashboard/employees}"
+            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+            <i class="fas fa-users mr-3"></i> Employees
+        </a>
+        <a th:href="@{/admin/dashboard/departments}"
+            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+            <i class="fas fa-building mr-3"></i> Departments
+        </a>
+        <a th:href="@{/admin/dashboard/leaves}"
+            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+            <i class="fas fa-calendar-alt mr-3"></i> Leave Requests
+        </a>
+        <a th:href="@{/admin/dashboard/settings}"
+            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+            <i class="fas fa-cogs mr-3"></i> Settings
+        </a>
+    </div>
+</th:block>

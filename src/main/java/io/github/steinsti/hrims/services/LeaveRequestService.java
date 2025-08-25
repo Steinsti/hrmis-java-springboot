@@ -34,7 +34,6 @@ public class LeaveRequestService {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid leave type: " + dto.getLeaveType());
         }
-        request.setLeaveType(LeaveType.valueOf(dto.getLeaveType()));
         request.setStartDate(dto.getStartDate());
         request.setEndDate(dto.getEndDate());
         request.setReason(dto.getReason());
