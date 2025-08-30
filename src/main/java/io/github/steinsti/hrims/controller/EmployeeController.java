@@ -1,6 +1,7 @@
 package io.github.steinsti.hrims.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,10 +31,18 @@ public class EmployeeController {
     public String employeeDashboard(Model model) {
         model.addAttribute("userName", employeeService.getCurrentUserName());
         model.addAttribute("userRole", employeeService.getCurrentUserRole());
+        Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
+        employeeOpt.ifPresent(employee -> model.addAttribute("employee", employee));
 
         return "employees/employee-dashboard";
     }
 
+    // @GetMapping("/profile")
+    // public String employeeProfile(Model model) {
+    //     Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
+    //     employeeOpt.ifPresent(employee -> model.addAttribute("employee", employee));
+    //     return "employees/profile";
+    // }
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'HR_ADMIN')")
 
@@ -83,4 +92,5 @@ public class EmployeeController {
     public String deleteEmployee(@PathVariable UUID id) {
         return "redirect:/employees";
     }
+
 }

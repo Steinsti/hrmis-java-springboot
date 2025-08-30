@@ -169,8 +169,7 @@
                                         hx-swap="innerHTML"
                                         hx-request='{"noCache":true}'>
                                         <i class="fas fa-user-plus mr-2"></i>
-                                        Add
-                                        New Employee
+                                        Add New Employee
                                     </button>
                                     <button
                                         class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-150">
@@ -201,6 +200,6 @@
             </div>
         </div>
         <div id="modal-container"></div>
-        <script src="/js/sidebar.js"></script>
+        <script th:src="@{/js/sidebar.js}"></script>
     </body>
 </html>

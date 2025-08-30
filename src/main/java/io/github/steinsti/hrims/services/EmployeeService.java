@@ -90,4 +90,10 @@ public class EmployeeService {
         return "UNKNOWN";
     }
 
+    public Optional<EmployeeResponseDTO> getCurrentEmployeeInfo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        return employeeRepository.findByEmail(username)
+                .map(this::convertToResponseDTO);
+    }
 }
