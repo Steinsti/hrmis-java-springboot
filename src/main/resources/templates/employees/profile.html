@@ -1,11 +1,89 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript"></script>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>STEIN HRIMS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/css/styles.build.tailwind.css}">
+        <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    </head>
+    <body class="bg-gray-100 font-sans antialiased">
+        <div class="min-h-screen flex">
+            <!-- Sidebar -->
+            <div id="sidebar"
+                th:replace="~{fragments/sidebar :: sidebar(${userRole}, ${userName}, ~{fragments/navigation/employeeNav :: employeeNav})}"
+                class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 md:relative
+                    transition-transform duration-300 ease-in-out
+                    bg-slate-800 text-white w-64 space-y-6 py-7 px-2 z-30">
+                <!-- nav will be injected here -->
+            </div>
 
-</body>
+            <!-- Content -->
+            <div class="flex-1 flex flex-col overflow-y-auto md:ml-0">
+                <div
+                    class="max-w-max mx-auto mt-10 bg-white rounded-lg shadow-md p-8">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-6">Employee
+                        Profile</h1>
+                    <div th:if="${employee != null}">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <p class="text-gray-600 mb-2"><span
+                                        class="font-semibold">First Name:</span>
+                                    <span
+                                        th:text="${employee.firstName}">John</span>
+                                </p>
+                                <p class="text-gray-600 mb-2"><span
+                                        class="font-semibold">Last Name:</span>
+                                    <span
+                                        th:text="${employee.lastName}">Doe</span>
+                                </p>
+                                <p class="text-gray-600 mb-2"><span
+                                        class="font-semibold">Email:</span>
+                                    <span
+                                        th:text="${employee.email}">john.doe@example.com</span>
+                                </p>
+                                <p class="text-gray-600 mb-2"><span
+                                        class="font-semibold">Phone
+                                        Number:</span>
+                                    <span
+                                        th:text="${employee.phoneNumber}">123-456-7890</span>
+                                </p>
+                                <p class="text-gray-600 mb-2"><span
+                                        class="font-semibold">Date of
+                                        Birth:</span>
+                                    <span
+                                        th:text="${employee.dateOfBirth}">1990-01-01</span>
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 mb-2"><span
+                                        class="font-semibold">Hire Date:</span>
+                                    <span
+                                        th:text="${employee.hireDate}">2020-01-01</span>
+                                </p>
+                                <p class="text-gray-600 mb-2"><span
+                                        class="font-semibold">Designation:</span>
+                                    <span
+                                        th:text="${employee.designation}">Software
+                                        Engineer</span>
+                                </p>
+                                <p class="text-gray-600 mb-2"><span
+                                        class="font-semibold">Department:</span>
+                                    <span
+                                        th:text="${employee.department}">IT</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${employee == null}">
+                        <p class="text-gray-600">No profile information
+                            available.</p>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <div id="footer"
+                    th:replace="~{fragments/footer :: footer}"></div>
+            </div>
+        </div>
+    </body>
 </html>

@@ -46,33 +46,57 @@
                 </div>
                 <div id="main-content">
                     <h1 class="text-3xl font-bold text-gray-800 mb-6 px-4 py-2"
-                        th:text="'Welcome, ' + ${employee.firstName} + ' ' + ${employee.lastName} + '!'"></h1>
+                        th:if="${employee != null}"
+                        th:text="'Welcome, ' + ${employee.firstName} + ' ' + ${employee.lastName} + '!'">
                     </h1>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-                    <div class="bg-white rounded-lg p-6 shadow-md transition-shadow hover:shadow-lg">
-                <h2 class="text-xl font-semibold text-gray-700 mb-2">Leave Balance</h2>
-                <p class="text-gray-500 mb-4">You have <span class="text-3xl font-bold text-indigo-600">12</span> vacation days remaining.</p>
-                <button class="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-indigo-600 transition duration-300">
-                    Request Leave
-                </button>
-            </div>
+                    <h1 class="text-3xl font-bold text-gray-800 mb-6 px-4 py-2"
+                        th:if="${employee == null}">
+                        Welcome!
+                    </h1>
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+                        <div
+                            class="bg-white rounded-lg p-6 shadow-md transition-shadow hover:shadow-lg">
+                            <h2
+                                class="text-xl font-semibold text-gray-700 mb-2">Leave
+                                Balance</h2>
+                            <p class="text-gray-500 mb-4">You have <span
+                                    class="text-3xl font-bold text-indigo-600">12</span>
+                                vacation days remaining.</p>
+                            <button
+                                class="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-indigo-600 transition duration-300">
+                                Request Leave
+                            </button>
+                        </div>
 
-            <div class="bg-white rounded-lg p-6 shadow-md transition-shadow hover:shadow-lg">
-                <h2 class="text-xl font-semibold text-gray-700 mb-2">Next Pay Date</h2>
-                <p class="text-gray-500 mb-4">Your next paycheck is scheduled for <span class="font-bold text-gray-800">September 15, 2025</span>.</p>
-                <button class="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition duration-300">
-                    View Pay Stub
-                </button>
-            </div>
+                        <div
+                            class="bg-white rounded-lg p-6 shadow-md transition-shadow hover:shadow-lg">
+                            <h2
+                                class="text-xl font-semibold text-gray-700 mb-2">Next
+                                Pay Date</h2>
+                            <p class="text-gray-500 mb-4">Your next paycheck is
+                                scheduled for <span
+                                    class="font-bold text-gray-800">September
+                                    15, 2025</span>.</p>
+                            <button
+                                class="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition duration-300">
+                                View Pay Stub
+                            </button>
+                        </div>
 
-            <div class="bg-white rounded-lg p-6 shadow-md transition-shadow hover:shadow-lg">
-                <h2 class="text-xl font-semibold text-gray-700 mb-2">Team Calendar</h2>
-                <p class="text-gray-500 mb-4">See who's out of the office this week.</p>
-                <button class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-600 transition duration-300">
-                    View Calendar
-                </button>
-            </div>
-</div>
+                        <div
+                            class="bg-white rounded-lg p-6 shadow-md transition-shadow hover:shadow-lg">
+                            <h2
+                                class="text-xl font-semibold text-gray-700 mb-2">Team
+                                Calendar</h2>
+                            <p class="text-gray-500 mb-4">See who's out of the
+                                office this week.</p>
+                            <button
+                                class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-600 transition duration-300">
+                                View Calendar
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
             </div>

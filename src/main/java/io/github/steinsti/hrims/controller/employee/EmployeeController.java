@@ -37,12 +37,14 @@ public class EmployeeController {
         return "employees/employee-dashboard";
     }
 
-    // @GetMapping("/profile")
-    // public String employeeProfile(Model model) {
-    //     Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
-    //     employeeOpt.ifPresent(employee -> model.addAttribute("employee", employee));
-    //     return "employees/profile";
-    // }
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'HR_ADMIN')")
+    @GetMapping("/profile")
+    public String employeeProfile(Model model) {
+        Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
+        employeeOpt.ifPresent(employee -> model.addAttribute("employee", employee));
+        return "employees/profile";
+    }
+
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'HR_ADMIN')")
 
