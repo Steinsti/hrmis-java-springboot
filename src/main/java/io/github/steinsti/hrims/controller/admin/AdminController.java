@@ -1,4 +1,4 @@
-package io.github.steinsti.hrims.controller;
+package io.github.steinsti.hrims.controller.admin;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import io.github.steinsti.hrims.dto.DepartmentsResponseDTO;
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
 import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
 import io.github.steinsti.hrims.services.AdminDashboardService;
-import io.github.steinsti.hrims.services.DepartmentService;
-import io.github.steinsti.hrims.services.EmployeeService;
+import io.github.steinsti.hrims.services.interfaces.DepartmentService;
+import io.github.steinsti.hrims.services.interfaces.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 

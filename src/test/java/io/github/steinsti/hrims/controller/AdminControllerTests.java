@@ -3,8 +3,8 @@ package io.github.steinsti.hrims.controller;
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
 import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
 import io.github.steinsti.hrims.services.AdminDashboardService;
-import io.github.steinsti.hrims.services.DepartmentService;
-import io.github.steinsti.hrims.services.EmployeeService;
+import io.github.steinsti.hrims.services.interfaces.DepartmentService;
+import io.github.steinsti.hrims.services.interfaces.EmployeeService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,10 +13,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
+
 import java.util.Arrays;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
+import io.github.steinsti.hrims.controller.admin.AdminController;
 
 class AdminControllerTest {
 

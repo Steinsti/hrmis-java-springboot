@@ -1,4 +1,4 @@
-package io.github.steinsti.hrims.controller;
+package io.github.steinsti.hrims.controller.employee;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.github.steinsti.hrims.dto.EmployeeRequestDTO;
 import io.github.steinsti.hrims.dto.EmployeeResponseDTO;
-import io.github.steinsti.hrims.services.EmployeeService;
+import io.github.steinsti.hrims.services.interfaces.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 

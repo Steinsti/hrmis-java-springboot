@@ -1,4 +1,4 @@
-package io.github.steinsti.hrims.controller;
+package io.github.steinsti.hrims.controller.admin;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.github.steinsti.hrims.dto.DepartmentsRequestDTO;
 import io.github.steinsti.hrims.model.Departments;
-import io.github.steinsti.hrims.services.DepartmentService;
+import io.github.steinsti.hrims.services.interfaces.DepartmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 

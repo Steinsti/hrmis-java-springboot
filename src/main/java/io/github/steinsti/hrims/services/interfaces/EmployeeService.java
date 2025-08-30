@@ -1,4 +1,4 @@
-package io.github.steinsti.hrims.services;
+package io.github.steinsti.hrims.services.interfaces;
 
 import java.util.List;
 import java.util.Optional;

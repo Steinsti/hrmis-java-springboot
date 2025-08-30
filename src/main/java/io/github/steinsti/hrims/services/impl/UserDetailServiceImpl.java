@@ -1,10 +1,11 @@
-package io.github.steinsti.hrims.services;
+package io.github.steinsti.hrims.services.impl;
 
-import io.github.steinsti.hrims.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import io.github.steinsti.hrims.model.User;
 import io.github.steinsti.hrims.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
