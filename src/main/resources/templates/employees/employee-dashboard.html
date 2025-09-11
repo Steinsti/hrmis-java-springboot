@@ -64,6 +64,9 @@
                                     class="text-3xl font-bold text-indigo-600">12</span>
                                 vacation days remaining.</p>
                             <button
+                                hx-get="/employee/leave/apply"
+                                hx-target="#main-content"
+                                hx-swap="innerHTML"
                                 class="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-indigo-600 transition duration-300">
                                 Request Leave
                             </button>

@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/leave")
+@RequestMapping("/employee/leave")
 public class LeaveController {
 
     private final LeaveRequestService leaveService;
@@ -28,13 +28,15 @@ public class LeaveController {
     @GetMapping("/apply")
     public String showApplyForm(Model model) {
         model.addAttribute("leaveRequest", new LeaveRequestDTO());
-        return "leave/apply";
+        // Return the fragment, not the whole template
+        return "employees/leave-application-form :: leaveApplicationForm";
     }
 
     @PostMapping("/apply")
     public String submitLeave(@ModelAttribute LeaveRequestDTO dto, @AuthenticationPrincipal Employee employee) {
         leaveService.applyLeave(dto, employee.getId());
-        return "redirect:/leave/my-requests";
+        // Correct redirect path to match mapping
+        return "redirect:/employee/leave/my-requests";
     }
 
     @GetMapping("/my-requests")
@@ -47,14 +49,14 @@ public class LeaveController {
     @PostMapping("/{id}/approve")
     public String approve(@PathVariable UUID id, @RequestParam String comment) {
         leaveService.approveLeave(id, comment);
-        return "redirect:/leave/pending";
+        return "redirect:/employee/leave/pending";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}/reject")
     public String reject(@PathVariable UUID id, @RequestParam String comment) {
         leaveService.rejectLeave(id, comment);
-        return "redirect:/leave/pending";
+        return "redirect:/employee/leave/pending";
     }
 
     @GetMapping("/pending")

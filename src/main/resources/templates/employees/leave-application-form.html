@@ -1,0 +1,58 @@
+<th:block th:fragment="leaveApplicationForm">
+    <!-- Leave Application Form Fragment -->
+    <div id="leaveApplicationForm" hx-target="body" hx-swap="outerHTML">
+        <form th:action="@{/employee/leave/apply}"
+            th:object="${leaveRequest}" method="post"
+            class="bg-white rounded-lg p-6 shadow-md max-w-lg mx-auto">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Leave
+                Application</h2>
+
+            <div class="mb-4">
+                <label for="leaveType"
+                    class="block text-gray-700 font-medium mb-2">Leave
+                    Type</label>
+                <select th:field="*{leaveType}" id="leaveType"
+                    name="leaveType"
+                    class="w-full border rounded px-3 py-2">
+                    <option value=" ">Select type</option>
+                    <option value="Annual">Annual</option>
+                    <option value="Sick">Sick</option>
+                    <option value="Unpaid">Unpaid</option>
+                    <!-- Add more types as needed -->
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="startDate"
+                    class="block text-gray-700 font-medium mb-2">Start
+                    Date</label>
+                <input th:field="*{startDate}" type="date" id="startDate"
+                    name="startDate" class="w-full border rounded px-3 py-2"
+                    required>
+            </div>
+
+            <div class="mb-4">
+                <label for="endDate"
+                    class="block text-gray-700 font-medium mb-2">End
+                    Date</label>
+                <input th:field="*{endDate}" type="date" id="endDate"
+                    name="endDate" class="w-full border rounded px-3 py-2"
+                    required>
+            </div>
+
+            <div class="mb-4">
+                <label for="reason"
+                    class="block text-gray-700 font-medium mb-2">Reason</label>
+                <textarea th:field="*{reason}" id="reason" name="reason"
+                    rows="3"
+                    class="w-full border rounded px-3 py-2"></textarea>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit"
+                    class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600 transition">Submit
+                    Request</button>
+            </div>
+        </form>
+    </div>
+</th:block>
