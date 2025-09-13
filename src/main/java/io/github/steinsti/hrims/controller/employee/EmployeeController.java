@@ -27,17 +27,25 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping("/dashboard")
     public String employeeDashboard(Model model) {
         model.addAttribute("userName", employeeService.getCurrentUserName());
         model.addAttribute("userRole", employeeService.getCurrentUserRole());
         Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
         employeeOpt.ifPresent(employee -> model.addAttribute("employee", employee));
-
         return "employees/employee-dashboard";
     }
 
-    @PreAuthorize("hasAnyRole('EMPLOYEE', 'HR_ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @GetMapping("/dashboard-content")
+    public String dashboardContent(Model model) {
+        Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
+        employeeOpt.ifPresent(employee -> model.addAttribute("employee", employee));
+        return "employees/dashboard-content :: dashboardContent(employee=${employee})";
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE', 'HR_ADMIN')")
     @GetMapping("/profile")
     public String employeeProfile(Model model) {
         Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
@@ -45,11 +53,17 @@ public class EmployeeController {
         return "employees/profile";
     }
 
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @GetMapping("/leave")
+    public String employeeLeave(Model model) {
+        Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
+        employeeOpt.ifPresent(employee -> model.addAttribute("employee", employee));
+        return "employees/employee-leave-tab";
+    }
+
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'HR_ADMIN')")
-
+    @PreAuthorize("hasRole('ADMIN', 'HR_ADMIN')")
     public String listEmployees(Model model) {
-
         List<EmployeeResponseDTO> employees = employeeService.getAllEmployees();
         model.addAttribute("employees", employees);
         return "employees/base :: employeeBaseContent";
@@ -58,48 +72,28 @@ public class EmployeeController {
     @PostMapping("/create")
     @PreAuthorize("hasAnyRole('ADMIN', 'HR_ADMIN')")
     public String createEmployee(@Valid @ModelAttribute("employeeRequestDTO") EmployeeRequestDTO employeeRequestDTO, BindingResult result, Model model) {
-
         if (result.hasErrors()) {
-            // If there are validation errors, return the form fragment again
-            // This allows the modal to show errors without closing
             model.addAttribute("employeeRequestDTO", employeeRequestDTO);
-            // Since this is for HTMX, we return the fragment itself
-            // The modal fragment expects 'employees/form :: employeeForm'
-            // We need to decide if the modal wrapper should handle the errors or the form itself.
-            // For simplicity, let's assume the form handles its own errors visually.
             model.addAttribute("errorMessage", "Please correct the form errors");
             return "employees/form :: employeeForm";
         }
-
         try {
             employeeService.createEmployee(employeeRequestDTO);
-            // After successful creation, fetch the updated list of employees
             List<EmployeeResponseDTO> employees = employeeService.getAllEmployees();
             model.addAttribute("employees", employees);
-            // Return the updated employee list fragment to replace the target on the dashboard
             return "employees/list :: employeeListContent";
-
         } catch (Exception e) {
-            // For now, let's just re-throw and return a basic error since we don't have proper error display in modal
             throw new RuntimeException("Failed to create employee", e);
         }
     }
 
-    // @PostMapping("/save")
-    // public String saveEmployee(@ModelAttribute Employee employee) {
-    //     employeeService.saveEmployee(employee);
-    //     return "redirect:/employees";
-    // }
     @GetMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable UUID id) {
         return "redirect:/employees";
     }
 
-    @GetMapping("/dashboard-content")
-    public String dashboardContent(Model model) {
-        Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
-        employeeOpt.ifPresent(employee -> model.addAttribute("employee", employee));
-        return "employees/dashboard-content :: dashboardContent(employee=${employee})";
-    }
-
+    // endregion
+    // region Future Extensions
+    // Add new controller methods here for easier organization.
+    // endregion
 }

@@ -1,0 +1,91 @@
+<th:block th:fragment="employeeLeaveTab">
+    <div class="p-6 bg-white rounded-lg shadow">
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-semibold mb-4">Leave Management</h2>
+            <button
+                hx-get="/employee/leave/apply"
+                hx-target="#main-content"
+                hx-swap="innerHTML"
+                class="w-48 bg-blue-500 text-white py-2 px-2 rounded-md font-medium hover:bg-blue-600 transition duration-300 text-sm">
+                Request Leave
+            </button>
+        </div>
+
+        <div class="space-y-4">
+            <div class="bg-white p-8 rounded-xl shadow-md mb-8">
+                <h3
+                    class="text-2xl font-semibold text-gray-700 border-b-2 border-gray-200 pb-4 mb-6">Leave
+                    Balances</h3>
+                <div
+                    class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div
+                        class="text-center p-6 border border-gray-200 rounded-lg">
+                        <div class="text-5xl font-bold text-blue-600">15</div>
+                        <div class="text-gray-500 mt-2">Annual Leave Days</div>
+                    </div>
+                    <div
+                        class="text-center p-6 border border-gray-200 rounded-lg">
+                        <div class="text-5xl font-bold text-green-600">8</div>
+                        <div class="text-gray-500 mt-2">Sick Leave Days</div>
+                    </div>
+                    <div
+                        class="text-center p-6 border border-gray-200 rounded-lg">
+                        <div class="text-5xl font-bold text-gray-400">3</div>
+                        <div class="text-gray-500 mt-2">Unpaid Leave Days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow-md">
+            <h3
+                class="text-2xl font-semibold text-gray-700 border-b-2 border-gray-200 pb-4 mb-6">Leave
+                Request History</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left table-auto">
+                    <thead>
+                        <tr
+                            class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6 text-left">Date Range</th>
+                            <th class="py-3 px-6 text-left">Type</th>
+                            <th class="py-3 px-6 text-left">Duration</th>
+                            <th class="py-3 px-6 text-center">Status</th>
+                            <th class="py-3 px-6 text-left">Approver</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 text-sm font-light">
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6">2025-08-15 to 2025-08-20</td>
+                            <td class="py-3 px-6">Annual Leave</td>
+                            <td class="py-3 px-6">5 days</td>
+                            <td class="py-3 px-6 text-center">
+                                <span
+                                    class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Approved</span>
+                            </td>
+                            <td class="py-3 px-6">Jane Doe</td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6">2025-07-01 to 2025-07-02</td>
+                            <td class="py-3 px-6">Sick Leave</td>
+                            <td class="py-3 px-6">2 days</td>
+                            <td class="py-3 px-6 text-center">
+                                <span
+                                    class="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">Pending</span>
+                            </td>
+                            <td class="py-3 px-6">John Smith</td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6">2025-06-10 to 2025-06-12</td>
+                            <td class="py-3 px-6">Annual Leave</td>
+                            <td class="py-3 px-6">3 days</td>
+                            <td class="py-3 px-6 text-center">
+                                <span
+                                    class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">Rejected</span>
+                            </td>
+                            <td class="py-3 px-6">Jane Doe</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</th:block>
