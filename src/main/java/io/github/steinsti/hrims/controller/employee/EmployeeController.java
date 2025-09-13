@@ -95,4 +95,11 @@ public class EmployeeController {
         return "redirect:/employees";
     }
 
+    @GetMapping("/dashboard-content")
+    public String dashboardContent(Model model) {
+        Optional<EmployeeResponseDTO> employeeOpt = employeeService.getCurrentEmployeeInfo();
+        employeeOpt.ifPresent(employee -> model.addAttribute("employee", employee));
+        return "employees/dashboard-content :: dashboardContent(employee=${employee})";
+    }
+
 }

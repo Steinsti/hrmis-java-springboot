@@ -2,17 +2,29 @@
 
 <th:block th:fragment="employeeNav">
     <div class="space-y-2">
-        <a th:href="@{/employees/dashboard}"
-            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150"><i
-                class="fas fa-home w-5 h-5 mr-3"></i> Dashboard</a>
-        <a th:href="@{/employees/profile}"
-            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150"><i
-                class="fas fa-id-badge mr-3"></i> My Profile</a>
-        <a th:href="@{/leave}"
-            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150"><i
-                class="fas fa-calendar-alt mr-3"></i> My Leave</a>
-        <a th:href="@{/payslips}"
-            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150"><i
-                class="fas fa-money-check-alt mr-3"></i> Payslips</a>
+        <a hx-get="/employees/dashboard-content"
+            hx-target="#main-content"
+            hx-swap="innerHTML"
+            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+            <i class="fas fa-home w-5 h-5 mr-3"></i> Dashboard
+        </a>
+        <a hx-get="/employees/profile"
+            hx-target="#main-content"
+            hx-swap="innerHTML"
+            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+            <i class="fas fa-id-badge mr-3"></i> My Profile
+        </a>
+        <a hx-get="/employees/leave/my-requests"
+            hx-target="#main-content"
+            hx-swap="innerHTML"
+            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+            <i class="fas fa-calendar-alt mr-3"></i> My Leave
+        </a>
+        <a hx-get="/payslips"
+            hx-target="#main-content"
+            hx-swap="innerHTML"
+            class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-700 hover:text-slate-100 transition duration-150">
+            <i class="fas fa-money-check-alt mr-3"></i> Payslips
+        </a>
     </div>
 </th:block>

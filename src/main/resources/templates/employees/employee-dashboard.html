@@ -11,97 +11,39 @@
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
-                #sidebar.sidebar-closed {
-             transform: translateX(-100%);
-        }
-        #sidebar.sidebar-open {
-            transform: translateX(0);
-        }
-        @media (min-width: 768px) {
-            #sidebar {
-                transform: translateX(0);
-                position: relative;
+            #sidebar.sidebar-closed {
+                transform: translateX(-100%);
             }
-        }
-            </style>
+            #sidebar.sidebar-open {
+                transform: translateX(0);
+            }
+            @media (min-width: 768px) {
+                #sidebar {
+                    transform: translateX(0);
+                    position: relative;
+                }
+            }
+        </style>
         <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     </head>
     <body class="bg-gray-100 font-sans antialiased">
         <div class="min-h-screen flex">
             <!-- Sidebar -->
             <div id="sidebar"
-                th:replace="~{fragments/sidebar :: sidebar(${userRole}, ${userName}, ~{fragments/navigation/employeeNav :: employeeNav})}"
-                class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 md:relative
-                transition-transform duration-300 ease-in-out
-                bg-slate-800 text-white w-64 space-y-6 py-7 px-2 z-30">
-                <!-- nav will be injected here -->
+                th:replace="~{fragments/sidebar :: sidebar(${userRole}, ${userName}, ~{fragments/navigation/employeeNav :: employeeNav})}">
             </div>
 
             <!-- Content -->
             <div id="content"
                 class="flex-1 flex flex-col overflow-y-auto md:ml-0">
-                <div id="header"
-                    class="w-full"
+                <div id="header" class="w-full"
                     th:replace="~{fragments/common-header :: header}">
                 </div>
+                <!-- Main content area is swappable -->
                 <div id="main-content">
-                    <h1 class="text-3xl font-bold text-gray-800 mb-6 px-4 py-2"
-                        th:if="${employee != null}"
-                        th:text="'Welcome, ' + ${employee.firstName} + ' ' + ${employee.lastName} + '!'">
-                    </h1>
-                    <h1 class="text-3xl font-bold text-gray-800 mb-6 px-4 py-2"
-                        th:if="${employee == null}">
-                        Welcome!
-                    </h1>
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-                        <div
-                            class="bg-white rounded-lg p-6 shadow-md transition-shadow hover:shadow-lg">
-                            <h2
-                                class="text-xl font-semibold text-gray-700 mb-2">Leave
-                                Balance</h2>
-                            <p class="text-gray-500 mb-4">You have <span
-                                    class="text-3xl font-bold text-indigo-600">12</span>
-                                vacation days remaining.</p>
-                            <button
-                                hx-get="/employee/leave/apply"
-                                hx-target="#main-content"
-                                hx-swap="innerHTML"
-                                class="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-indigo-600 transition duration-300">
-                                Request Leave
-                            </button>
-                        </div>
-
-                        <div
-                            class="bg-white rounded-lg p-6 shadow-md transition-shadow hover:shadow-lg">
-                            <h2
-                                class="text-xl font-semibold text-gray-700 mb-2">Next
-                                Pay Date</h2>
-                            <p class="text-gray-500 mb-4">Your next paycheck is
-                                scheduled for <span
-                                    class="font-bold text-gray-800">September
-                                    15, 2025</span>.</p>
-                            <button
-                                class="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition duration-300">
-                                View Pay Stub
-                            </button>
-                        </div>
-
-                        <div
-                            class="bg-white rounded-lg p-6 shadow-md transition-shadow hover:shadow-lg">
-                            <h2
-                                class="text-xl font-semibold text-gray-700 mb-2">Team
-                                Calendar</h2>
-                            <p class="text-gray-500 mb-4">See who's out of the
-                                office this week.</p>
-                            <button
-                                class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-600 transition duration-300">
-                                View Calendar
-                            </button>
-                        </div>
-                    </div>
+                    <th:block
+                        th:replace="~{employees/dashboard-content :: dashboardContent(${employee})}"></th:block>
                 </div>
-
             </div>
 
             <!-- Footer -->
